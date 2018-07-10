@@ -12,7 +12,7 @@ directorio = 'G:\Proyectos\2017_Cultivo\Datos';
 directorio2 = 'G:\Proyectos\2017_Cultivo\Datos2';
 coord=xlsread('G:\Proyectos\2017_Cultivo\Datos\Coordenadas.xlsx');
 
-% %% Mejillon, vieira, zamburiña, volandeira (inicial)****MAL****
+% %% Mejillon, vieira, zamburiña, volandeira, pulpo (inicial)****MAL****
 % for i=1:1039
 %     load([directorio2,'\SSTactualizada','\SST_',num2str((i)),'.mat']); %SST
 %     tT = datevec(SST(:,1));
