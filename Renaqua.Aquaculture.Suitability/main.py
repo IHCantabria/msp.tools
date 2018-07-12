@@ -1,6 +1,5 @@
-def main():
-    print("Deshacer el mundo")
-
+def main():    
+    pass
 
 if __name__ == '__main__':
     main()
