@@ -1,26 +1,22 @@
-# Standard libs:
-import json
-
 # Our libs:
 from libaquaculture import ihdata
+from libaquaculture import core
 
 
 # Globals:
 CONF_FILE = "conf/RenaquaAquacultureSuitability.json"
 
+
 # Functions:
-
-
 def main():
-    with open(CONF_FILE) as f:
-        J = json.load(f)
+    """Main loop."""
 
-    print(J)
-    print(J.get('thredds_url_base'))
+    # Read configuration:
+    conf = core.read_conf(CONF_FILE)
 
-    # print(J)
+    print(conf.get('thredds_url_base'))
 
-    # descargar(conf)
+    #descargar(conf)
 
 
 # Main body:
