@@ -6,7 +6,7 @@ from libaquaculture import ihdata
 
 
 # Globals:
-CONF_FILE = "Renaqua.Aquaculture.Suitability/conf/RenaquaAquacultureSuitability.json"
+CONF_FILE = "conf/RenaquaAquacultureSuitability.json"
 
 # Functions:
 
