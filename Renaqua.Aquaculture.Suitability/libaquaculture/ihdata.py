@@ -6,5 +6,5 @@ class IHData(object):
         pass  # Empty constructor
     
     def method_name(self, parameter_list):
-        pass
+        print(parameter_list)
 
