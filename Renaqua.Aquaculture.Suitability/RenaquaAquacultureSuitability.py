@@ -6,19 +6,21 @@ from libaquaculture import ihdata
 
 
 # Globals:
-CONF_FILE = "conf/RenaquaAquacultureSuitability.json"
-
+CONF_FILE = "Renaqua.Aquaculture.Suitability/conf/RenaquaAquacultureSuitability.json"
 
 # Functions:
+
+
 def main():
     with open(CONF_FILE) as f:
         J = json.load(f)
 
     print(J)
-    # qué poner aquí para que imprima la URL?
-    #print(thredds_base_url)
+    print(J.get('thredds_url_base'))
 
-    #descargar(conf)
+    # print(J)
+
+    # descargar(conf)
 
 
 # Main body:
