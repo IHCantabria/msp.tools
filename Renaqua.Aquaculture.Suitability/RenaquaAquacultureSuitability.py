@@ -1,6 +1,6 @@
 # Our libs:
-from libaquaculture import ihdata
 from libaquaculture import core
+from libaquaculture import ihdata
 
 
 # Globals:
@@ -16,7 +16,8 @@ def main():
 
     # Instantiate an IHData object:
     thredds_ihdata = ihdata.IHData()
-    thredds_ihdata.method_name("salchicha")
+    salinity = thredds_ihdata.get_variable("sea_water_salinity", conf)
+    print(salinity)
 
     #descargar(conf)
 
