@@ -15,8 +15,8 @@ def main():
     conf = core.read_conf(CONF_FILE)
 
     # Instantiate an IHData object:
-    thredds_ihdata = ihdata.IHData()
-    salinity = thredds_ihdata.get_variable("sea_water_salinity", conf)
+    thredds_ihdata = ihdata.IHData(conf)
+    salinity = thredds_ihdata.get_variable("salinity")
     print(salinity)
 
     #descargar(conf)
