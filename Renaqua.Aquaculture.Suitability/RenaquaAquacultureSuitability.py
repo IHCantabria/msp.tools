@@ -8,7 +8,7 @@ from libaquaculture import ihdata
 
 # Globals:
 CONF_FILE = "conf/RenaquaAquacultureSuitability.json"
-START_DATE = datetime(2012, 7, 1)
+START_DATE = datetime(2011, 7, 1)
 END_DATE = datetime(2012, 7, 31)
 
 
@@ -24,8 +24,8 @@ def main():
     for wednesday in wednesdays:
         data_nc = ihdata.NCFile(conf, wednesday)
         print(data_nc.file_url)
-        salinity = data_nc.get_variable("salinity")
-        print(salinity)
+        #salinity = data_nc.get_variable("salinity")
+        #print(salinity)
 
 
 # Main body:

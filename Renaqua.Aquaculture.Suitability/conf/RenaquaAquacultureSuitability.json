@@ -1,5 +1,5 @@
 {
     "thredds_url_base": "http://193.144.213.180:8080/thredds/dodsC",
-    "url_file": "http://193.144.213.180:8080/thredds/dodsC/salinity/ARMOR3D_REPv3-1_20130102_20140420.nc",
-    "url_patt": "http://193.144.213.180:8080/thredds/dodsC/{VAR}/ARMOR3D_REPv3-1_{DATE:%Y%m%d}_{BATCH}.nc"
+    "url_patt": "http://193.144.213.180:8080/thredds/dodsC/{VAR}/ARMOR3D_REPv3-1_{DATE:%Y%m%d}_{BATCH}.nc",
+    "salinity_batches": ["20140420", "20130910"]
 }
