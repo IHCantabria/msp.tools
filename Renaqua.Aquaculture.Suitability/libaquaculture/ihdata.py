@@ -1,6 +1,9 @@
 # Standard libs:
 import netCDF4 as nc4
 
+# Our libs:
+from libaquaculture import core
+
 
 # Classes:
 class NCFile(object):
@@ -21,11 +24,28 @@ class NCFile(object):
 
         return var
 
-    def get_lat(self):
+    def get_lons(self):
+        """Returns array with longitudes."""
+
+        with nc4.Dataset(self.file_url) as nc:
+            return nc.variables["longitude"][:]
+
+    def get_lats(self):
         """Returns array with latitudes."""
 
         with nc4.Dataset(self.file_url) as nc:
             return nc.variables["latitude"][:]
+
+    def indices_of(self, lon, lat):
+        """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
+
+        lons = self.get_lons()
+        lats = self.get_lats()
+
+        i = core.closest_index(lon, lons)
+        j = core.closest_index(lat, lats)
+
+        return i, j
 
     # Public properties:
     @property
@@ -36,7 +56,7 @@ class NCFile(object):
             return self._file_url
 
         for batch in self.conf["salinity_batches"]:
-            test_url = self.conf["url_patt"].format(VAR="salinity", DATE=self.date, BATCH=batch)
+            test_url = self.conf["url_patt"].format(VAR="Salinity", DATE=self.date, BATCH=batch)
             if self.exists(test_url):
                 self._file_url = test_url
                 break

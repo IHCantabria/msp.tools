@@ -8,8 +8,10 @@ from libaquaculture import ihdata
 
 # Globals:
 CONF_FILE = "conf/RenaquaAquacultureSuitability.json"
-START_DATE = datetime(2011, 7, 1)
+START_DATE = datetime(2012, 7, 1)
 END_DATE = datetime(2012, 7, 31)
+X = 0.0  # longitude
+Y = 0.0  # latitude
 
 
 # Functions:
@@ -20,10 +22,11 @@ def main():
     conf = core.read_conf(CONF_FILE)
 
     # Get list of wednesdays, and operate on them:
-    wednesdays = core.wednesdays_between(START_DATE, END_DATE)
+    wednesdays = core.wednesdays_between(START_DATE, END_DATE)[:1]
     for wednesday in wednesdays:
         data_nc = ihdata.NCFile(conf, wednesday)
         print(data_nc.file_url)
+        print(data_nc.indices_of(X, Y))
         #salinity = data_nc.get_variable("salinity")
         #print(salinity)
 

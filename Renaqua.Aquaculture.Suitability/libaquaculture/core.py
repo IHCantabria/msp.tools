@@ -32,3 +32,11 @@ def wednesdays_between(start_date, end_date):
         wednesday += timedelta(days=7)
 
     return wlist
+
+
+def closest_index(value, values):
+    """Returns index in array 'values', corresponding to the value closest to 'value'."""
+
+    # Use decorate-sort-undecorate:
+    return sorted([(abs(v-value), i) for i, v in enumerate(values)])[0][1]
+
