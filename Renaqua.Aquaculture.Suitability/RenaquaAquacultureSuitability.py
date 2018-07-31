@@ -22,13 +22,11 @@ def main():
     conf = core.read_conf(CONF_FILE)
 
     # Get list of wednesdays, and operate on them:
-    wednesdays = core.wednesdays_between(START_DATE, END_DATE)[:1]
+    wednesdays = core.wednesdays_between(START_DATE, END_DATE)
     for wednesday in wednesdays:
         data_nc = ihdata.NCFile(conf, wednesday)
-        print(data_nc.file_url)
-        print(data_nc.indices_of(X, Y))
-        #salinity = data_nc.get_variable("salinity")
-        #print(salinity)
+        salinity = data_nc.get_salinity_of(X, Y)
+        print(data_nc.file_url, salinity)
 
 
 # Main body:

@@ -16,13 +16,11 @@ class NCFile(object):
         self._file_url = None
 
     # Public methods:
-    def get_variable(self, var_name):
-        """Returns contents of variable 'var_name'."""
+    def get_variable(self, var_name, i, j):
+        """Return value of variable 'var_name' at indices (i, j)."""
 
         with nc4.Dataset(self.file_url) as nc:
-            var = nc.variables[var_name][0, 115, 115]
-
-        return var
+            return nc.variables[var_name][0, i, j]
 
     def get_lons(self):
         """Returns array with longitudes."""
@@ -36,7 +34,7 @@ class NCFile(object):
         with nc4.Dataset(self.file_url) as nc:
             return nc.variables["latitude"][:]
 
-    def indices_of(self, lon, lat):
+    def get_indices_of(self, lon, lat):
         """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
 
         lons = self.get_lons()
@@ -46,6 +44,13 @@ class NCFile(object):
         j = core.closest_index(lat, lats)
 
         return i, j
+
+    def get_salinity_of(self, lon, lat):
+        """Given a (lon, lat), return salinity."""
+
+        i, j = self.get_indices_of(lon, lat)
+
+        return self.get_variable("salinity", i, j)
 
     # Public properties:
     @property
