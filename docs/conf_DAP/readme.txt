@@ -1,0 +1,2 @@
+fichero de configuracion para windows de acceso a IHData. Recordar que el dodsrc va con punto al inicio del nombre fichero
+referencia de configuracion de DAP: http://docs.opendap.org/index.php/DAP_Clients_-_Authentication#Matlab.2C_Ferret.2C_Other_applications_that_use_NetCDF_C
