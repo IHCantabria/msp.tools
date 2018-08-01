@@ -16,11 +16,11 @@ class NCFile(object):
         self._file_url = None
 
     # Public methods:
-    def get_variable(self, var_name, j, i):
-        """Return value of variable 'var_name' at indices (i, j)."""
+    def get_variable(self, var_name, i, j, d):
+        """Return value of variable 'var_name' at (lat, lon) indices (i, j), and depth index 'd'."""
 
         with nc4.Dataset(self.file_url) as nc:
-            return nc.variables[var_name][0, j, i]
+            return nc.variables[var_name][d, j, i]
 
     def get_lons(self):
         """Returns array with longitudes."""
@@ -33,6 +33,12 @@ class NCFile(object):
 
         with nc4.Dataset(self.file_url) as nc:
             return nc.variables["latitude"][:]
+
+    def get_depths(self):
+        """Returns array with depth values."""
+
+        with nc4.Dataset(self.file_url) as nc:
+            return nc.variables["depth"][:]
 
     def get_indices_of(self, lon, lat):
         """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
@@ -51,12 +57,20 @@ class NCFile(object):
 
         return i, j
 
-    def get_salinity_of(self, lon, lat):
+    def get_depth_index_of(self, depth):
+        """Given depth of 'depth' meters, return closest index."""
+
+        depths = self.get_depths()
+
+        return core.closest_index(depth, depths)
+
+    def get_salinity_of(self, lon, lat, depth):
         """Given a (lon, lat), return salinity."""
 
         i, j = self.get_indices_of(lon, lat)
+        d = self.get_depth_index_of(depth)
 
-        return self.get_variable("salinity", j, i)
+        return self.get_variable("salinity", i, j, d)
 
     # Public properties:
     @property
