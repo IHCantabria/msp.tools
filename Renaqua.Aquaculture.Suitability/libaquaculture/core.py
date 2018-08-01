@@ -40,3 +40,25 @@ def closest_index(value, values):
     # Use decorate-sort-undecorate:
     return sorted([(abs(v-value), i) for i, v in enumerate(values)])[0][1]
 
+
+def confine_to_0_360(n):
+    """Return number 'n' confined to (0, 360).
+    E.g.:
+    33 -> 33
+    370 -> 10
+    -20 -> 340
+    """
+    return n % 360
+
+
+def confine_to_plus_minus_90(n):
+    """Return number 'n' confned to (-90, 90).
+    E.g.:
+    33 -> 33
+    100 -> -80
+    -110 -> 70
+
+    Notice how we use '89.99' and not '90', so that the edge case n=90
+    be translated to 90, and not -90.
+    """
+    return (n + 89.99) % 180 - 89.99

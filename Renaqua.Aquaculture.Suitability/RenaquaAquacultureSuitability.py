@@ -10,9 +10,9 @@ from libaquaculture import ihdata
 CONF_FILE = "conf/RenaquaAquacultureSuitability.json"
 START_DATE = datetime(2012, 7, 1)
 END_DATE = datetime(2012, 7, 31)
-X = 0.0  # longitude
-Y = 0.0  # latitude
-
+X = -10.0  # longitude
+Y = 43.5  # latitude
+#43.4944761,-3.874522,17z
 
 # Functions:
 def main():
@@ -27,6 +27,7 @@ def main():
         data_nc = ihdata.NCFile(conf, wednesday)
         salinity = data_nc.get_salinity_of(X, Y)
         print(data_nc.file_url, salinity)
+        break
 
 
 # Main body:
