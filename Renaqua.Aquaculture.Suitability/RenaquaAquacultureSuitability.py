@@ -25,7 +25,8 @@ def main():
     # Get list of wednesdays, and operate on them:
     wednesdays = core.wednesdays_between(START_DATE, END_DATE)
     for wednesday in wednesdays:
-        data_nc = ihdata.NCFile(conf, wednesday)
+        #data_nc = ihdata.NCFile(conf, wednesday)
+        data_nc = ihdata.SalinityFile(conf, wednesday)
         salinity = data_nc.get_salinity_of(X, Y, DEPTH)
         print(data_nc.file_url, salinity)
 

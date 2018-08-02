@@ -100,3 +100,19 @@ class NCFile(object):
         except OSError:
             return False
 
+
+class SalinityFile(NCFile):
+    """An NCFile specifically for salinity."""
+
+    # Constructor:
+    def __init__(self, conf, file_date):
+         super().__init__(conf, file_date)
+
+
+class TemperatureFile(NCFile):
+    """An NCFile specifically for temperature."""
+
+    # Constructor:
+    def __init__(self, conf, file_date):
+        super().__init__(conf, file_date)
+
