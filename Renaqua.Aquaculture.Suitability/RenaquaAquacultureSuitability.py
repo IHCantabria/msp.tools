@@ -28,21 +28,28 @@ def main():
     # Read configuration:
     conf = core.read_conf(CONF_FILE)
 
-    # Get list of wednesdays, and operate on them:
+    # Salinity:
+    """
     wednesdays = core.wednesdays_between(START_DATE, END_DATE)
     salinity_data = {}
     for wednesday in wednesdays:
-        # Salinity:
         salinity_file = ihdata.SalinityFile(conf, wednesday)
         salinity_data[wednesday] = salinity_file.get_salinity_of(opts.longitude, opts.latitude, opts.depth)
+    """
 
-        # Temperature:
-        #temperature_file = ihdata.TemperatureFile(conf, wednesday)
+    # Temperature:
+    days = core.days_between(START_DATE, END_DATE)
+    temperature_data = {}
+    for day in days:
+        temperature_file = ihdata.TemperatureFile(conf, day)
+        temperature_data[day] = temperature_file.get_temperature_of(opts.longitude, opts.latitude, opts.depth)
 
+    """
     # Create Species object:
     print(salinity_data)
     species = biology.Species()
-    species.salinity_suitability_index(salinity_data.values())
+    #species.salinity_suitability_index(salinity_data.values())
+    """
 
 
 # Main body:

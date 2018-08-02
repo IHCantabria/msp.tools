@@ -59,6 +59,18 @@ def wednesdays_between(start_date, end_date):
     return wlist
 
 
+def days_between(start_date, end_date):
+    """Returns a list of datetime() objects, representing all the days
+    between start_date and end_date, including.
+    """
+    dlist = []
+    day = start_date
+    while day <= end_date:
+        dlist.append(day)
+        day += timedelta(days=1)
+
+    return dlist
+
 def closest_index(value, values):
     """Returns index in array 'values', corresponding to the value closest to 'value'."""
 
@@ -87,3 +99,17 @@ def confine_to_plus_minus_90(n):
     be translated to 90, and not -90.
     """
     return (n + 89.99) % 180 - 89.99
+
+
+def confine_to_plus_minus_180(n):
+    """Return number 'n' confned to (-180, 180).
+    E.g.:
+    33 -> 33
+    100 -> -80
+    -110 -> -110
+    -200 -> 160
+
+    Notice how we use '179.99' and not '180', so that the edge case n=180
+    be translated to 180, and not -180.
+    """
+    return (n + 179.99) % 360 - 179.99
