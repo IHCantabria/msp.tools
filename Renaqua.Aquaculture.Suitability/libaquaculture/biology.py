@@ -1,6 +1,6 @@
 # Classes:
 class Species(object):
-    """Description of a given animal species."""
+    """Description of a given biological species."""
 
     # Constructor:
     def __init__(self):

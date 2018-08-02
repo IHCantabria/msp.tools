@@ -1,5 +1,6 @@
 {
-    "European seabass": {
+    "s0001": {
+        "name": "European seabass",
         "temperature_min": 30,
         "temperature_max": 40,
         "salinity_min": 18,
@@ -17,7 +18,7 @@
         "salinity_min": 6,
         "salinity_max": 16
     },
-    "Atlantic Bluefin tuna": {
+    "Atlantic bluefin tuna": {
         "temperature_min": 30,
         "temperature_max": 40,
         "salinity_min": 18,

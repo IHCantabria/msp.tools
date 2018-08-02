@@ -1,9 +1,34 @@
 # Standard libs:
+import sys
 import json
+import argparse
 from datetime import timedelta
 
 
 # Functions:
+def parse_args(args=sys.argv[1:]):
+    """Read and parse arguments"""
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-x", "--longitude",
+                        help="Longitude of point to check. Default: None.",
+                        type=float,
+                        default=None)
+
+    parser.add_argument("-y", "--latitude",
+                        help="Latitude of point to check. Default: None.",
+                        type=float,
+                        default=None)
+
+    parser.add_argument("-d", "--depth",
+                        help="Depth of point to check. Default: 0.0.",
+                        type=float,
+                        default=0.0)
+
+    return parser.parse_args(args)
+
+
 def read_conf(file_name):
     """Read configuration, and return it as dictionary."""
     
