@@ -5,10 +5,40 @@
         "salinity_min": 18,
         "salinity_max": 27
     },
-    "Gilthead seabream": (30 & SST<=40) & (Salinity>=18 & <=26);
-    "Atlantic salmon": (SST>=30 & SST<=35) & (Salinity>=6 & <=16);
-    "Atlantic Bluefin tuna": (SST>=30 & SST<=40) & (Salinity>=18 & <=26);
-    "Meagre": (SST>=30 & SST<=40) & (Salinity>=18 & <=26);
-    "Greater amberjack": (SST>=30 & SST<=36) & (Salinity>=20 & <=26);
-    "Cobia": (SST>=30 & SST<=35) & (Salinity>=26 & <=31)
+    "Gilthead seabream": {
+        "temperature_min": 30,
+        "temperature_max": 40,
+        "salinity_min": 18,
+        "salinity_max": 26
+    },
+    "Atlantic salmon": {
+        "temperature_min": 30,
+        "temperature_max": 35,
+        "salinity_min": 6,
+        "salinity_max": 16
+    },
+    "Atlantic Bluefin tuna": {
+        "temperature_min": 30,
+        "temperature_max": 40,
+        "salinity_min": 18,
+        "salinity_max": 26
+    },
+    "Meagre": {
+        "temperature_min": 30,
+        "temperature_max": 40,
+        "salinity_min": 18,
+        "salinity_max": 26
+    },
+    "Greater amberjack": {
+        "temperature_min": 30,
+        "temperature_max": 36,
+        "salinity_min": 20,
+        "salinity_max": 26
+    },
+    "Cobia": {
+        "temperature_min": 30,
+        "temperature_max": 35,
+        "salinity_min": 26,
+        "salinity_max": 31
+    }
 }
