@@ -1,4 +1,5 @@
 # Standard libs:
+import os
 import netCDF4 as nc4
 
 # Our libs:
@@ -16,12 +17,6 @@ class NCFile(object):
         self._file_url = None
 
     # Public methods:
-    def get_variable(self, var_name, i, j, d):
-        """Return value of variable 'var_name' at (lat, lon) indices (i, j), and depth index 'd'."""
-
-        with nc4.Dataset(self.file_url) as nc:
-            return nc.variables[var_name][d, j, i]
-
     def get_depths(self):
         """Returns array with depth values."""
 
@@ -56,6 +51,12 @@ class SalinityFile(NCFile):
         super().__init__(conf, file_date)
 
     # Public methods:
+    def get_variable(self, var_name, i, j, d):
+        """Return value of variable 'var_name' at (lon, lat) indices (i, j), and depth index 'd'."""
+
+        with nc4.Dataset(self.file_url) as nc:
+            return nc.variables[var_name][d, j, i]
+
     def get_salinity_of(self, lon, lat, depth):
         """Given a (lon, lat), return salinity."""
 
@@ -116,16 +117,18 @@ class TemperatureFile(NCFile):
         super().__init__(conf, file_date)
 
     # Public methods:
+    def get_variable(self, var_name, i, j, t):
+        """Return value of variable 'var_name' at (lon, lat) indices (i, j), and time index "t"."""
+
+        with nc4.Dataset(self.file_url) as nc:
+            return nc.variables[var_name][j, i, t]
+
     def get_temperature_of(self, lon, lat):
-        """Given a (lon, lat), return salinity."""
+        """Given a (lon, lat), return temperature."""
 
         i, j = self.get_indices_of(lon, lat)
-        print(lon, lat)
-        print(i, j)
-        print(self.get_longitudes()[i], self.get_latitudes()[j])
-        exit()
 
-        return self.get_variable("sst", i, j, d)
+        return self.get_variable("sst", i, j, self.time_index)
 
     def get_indices_of(self, lon, lat):
         """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
@@ -162,9 +165,16 @@ class TemperatureFile(NCFile):
         """URL of remote netCDF in THREDDS."""
 
         if self._file_url is None:
-            self._file_url = self.conf["temperature_url_pattern"].format(DATE=self.date)
+            self._file_url = os.path.join(self.conf["thredds_url_base"],
+                                          self.conf["temperature_url_pattern"].format(DATE=self.date))
 
         return self._file_url
+
+    @property
+    def time_index(self):
+        """Return index in NetCDF, corresponding to current date."""
+
+        return self.date.day - 1
 
 
 
