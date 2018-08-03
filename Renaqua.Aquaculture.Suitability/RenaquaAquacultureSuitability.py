@@ -42,7 +42,8 @@ def main():
     temperature_data = {}
     for day in days:
         temperature_file = ihdata.TemperatureFile(conf, day)
-        temperature_data[day] = temperature_file.get_temperature_of(opts.longitude, opts.latitude, opts.depth)
+        print(temperature_file.file_url)
+        #temperature_data[day] = temperature_file.get_temperature_of(opts.longitude, opts.latitude)
 
     """
     # Create Species object:

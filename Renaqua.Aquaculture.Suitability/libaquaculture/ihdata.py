@@ -22,18 +22,6 @@ class NCFile(object):
         with nc4.Dataset(self.file_url) as nc:
             return nc.variables[var_name][d, j, i]
 
-    def get_longitudes(self):
-        """Returns array with longitudes."""
-
-        with nc4.Dataset(self.file_url) as nc:
-            return nc.variables["longitude"][:]
-
-    def get_latitudes(self):
-        """Returns array with latitudes."""
-
-        with nc4.Dataset(self.file_url) as nc:
-            return nc.variables["latitude"][:]
-
     def get_depths(self):
         """Returns array with depth values."""
 
@@ -46,22 +34,6 @@ class NCFile(object):
         depths = self.get_depths()
 
         return core.closest_index(depth, depths)
-
-    # Public properties:
-    @property
-    def file_url(self):
-        """URL of remote netCDF in THREDDS."""
-
-        if self._file_url is not None:
-            return self._file_url
-
-        for batch in self.conf["salinity_batches"]:
-            test_url = self.conf["url_patt"].format(VAR="Salinity", DATE=self.date, BATCH=batch)
-            if self.exists(test_url):
-                self._file_url = test_url
-                break
-
-        return self._file_url
 
     # Static methods:
     @staticmethod
@@ -109,6 +81,32 @@ class SalinityFile(NCFile):
 
         return i, j
 
+    def get_longitudes(self):
+        """Returns array with longitudes."""
+
+        with nc4.Dataset(self.file_url) as nc:
+            return nc.variables["longitude"][:]
+
+    def get_latitudes(self):
+        """Returns array with latitudes."""
+
+        with nc4.Dataset(self.file_url) as nc:
+            return nc.variables["latitude"][:]
+
+    # Public properties:
+    @property
+    def file_url(self):
+        """URL of remote netCDF in THREDDS."""
+
+        if self._file_url is None:
+            for batch in self.conf["salinity_batches"]:
+                test_url = self.conf["salinity_url_pattern"].format(DATE=self.date, BATCH=batch)
+                if self.exists(test_url):
+                    self._file_url = test_url
+                    break
+
+        return self._file_url
+
 
 class TemperatureFile(NCFile):
     """An NCFile specifically for temperature."""
@@ -122,6 +120,10 @@ class TemperatureFile(NCFile):
         """Given a (lon, lat), return salinity."""
 
         i, j = self.get_indices_of(lon, lat)
+        print(lon, lat)
+        print(i, j)
+        print(self.get_longitudes()[i], self.get_latitudes()[j])
+        exit()
 
         return self.get_variable("sst", i, j, d)
 
@@ -141,6 +143,28 @@ class TemperatureFile(NCFile):
         j = core.closest_index(lat, lats)
 
         return i, j
+
+    def get_longitudes(self):
+        """Returns array with longitudes."""
+
+        with nc4.Dataset(self.file_url) as nc:
+            return nc.variables["lon"][:]
+
+    def get_latitudes(self):
+        """Returns array with latitudes."""
+
+        with nc4.Dataset(self.file_url) as nc:
+            return nc.variables["lat"][:]
+
+    # Public properties:
+    @property
+    def file_url(self):
+        """URL of remote netCDF in THREDDS."""
+
+        if self._file_url is None:
+            self._file_url = self.conf["temperature_url_pattern"].format(DATE=self.date)
+
+        return self._file_url
 
 
 

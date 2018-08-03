@@ -71,6 +71,7 @@ def days_between(start_date, end_date):
 
     return dlist
 
+
 def closest_index(value, values):
     """Returns index in array 'values', corresponding to the value closest to 'value'."""
 
