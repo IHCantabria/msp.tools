@@ -2,7 +2,8 @@
 import sys
 import json
 import argparse
-from datetime import timedelta
+from datetime import timedelta, datetime
+from scipy.interpolate import interp1d
 
 
 # Functions:
@@ -114,3 +115,40 @@ def confine_to_plus_minus_180(n):
     be translated to 180, and not -180.
     """
     return (n + 179.99) % 360 - 179.99
+
+
+def fill_temporal_gaps(period, data):
+    """Fill gaps: dates in 'period' for which there is no value in 'data'.
+    Return filled-in data.
+    """
+    # First check if data covers period (lest we try to extrapolate, which we can't do).
+    # If lowest date in period is below data, use lowest data point, and if highest date
+    # in period is above data, use highest data point.
+    lowest_in_period = period[0]
+    lowest_in_data = sorted(data.keys())[0]
+    if lowest_in_period < lowest_in_data:
+        data[lowest_in_period] = data[lowest_in_data]
+
+    highest_in_period = period[-1]
+    highest_in_data = sorted(data.keys())[-1]
+    if highest_in_period > highest_in_data:
+        data[highest_in_period] = data[highest_in_data]
+
+    # Gather X,Y to interpolate to:
+    X, Y = [], []
+    for day, value in sorted(data.items()):
+        x = day.timestamp()
+        X.append(x)
+        Y.append(value)
+
+    # Generate interpolator, and perform interpolation:
+    new_data = {}
+    interpolator_function = interp1d(X, Y)
+    for day in period:
+        x = day.timestamp()
+        s = interpolator_function(x)
+        new_data[day] = s
+
+    return new_data
+
+
