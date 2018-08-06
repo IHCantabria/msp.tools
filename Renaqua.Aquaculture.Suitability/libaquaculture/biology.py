@@ -3,9 +3,8 @@ class Species(object):
     """Description of a given biological species."""
 
     # Constructor:
-    def __init__(self):
-        self.min_sality = None
-        self.max_sality = None
+    def __init__(self, identifier):
+        self.id = identifier
 
     # Public methods:
     def salinity_value_ok(self, salinity):

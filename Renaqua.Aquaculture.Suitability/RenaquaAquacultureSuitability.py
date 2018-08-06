@@ -25,6 +25,10 @@ def main():
         print("Both latitude and longitude must be provided! Exiting...")
         exit()
 
+    if opts.id is None:
+        print("You need to provide an ID for the biological species! Exiting...")
+        exit()
+
     # Read configuration:
     conf = core.read_conf(CONF_FILE)
 
@@ -47,8 +51,7 @@ def main():
     temperature_data = core.fill_temporal_gaps(days, temperature_data)
 
     # Create Species object:
-    print(salinity_data)
-    species = biology.Species()
+    species = biology.Species(opts.id)
     #species.salinity_suitability_index(salinity_data.values())
 
 

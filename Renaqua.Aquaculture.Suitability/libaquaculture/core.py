@@ -27,6 +27,10 @@ def parse_args(args=sys.argv[1:]):
                         type=float,
                         default=0.0)
 
+    parser.add_argument("--id",
+                        help="Identifier of biological species. Default: None.",
+                        default=None)
+
     return parser.parse_args(args)
 
 
