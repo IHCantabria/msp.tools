@@ -9,6 +9,7 @@ from libaquaculture import biology
 
 # Globals:
 CONF_FILE = "conf/RenaquaAquacultureSuitability.json"
+SPECIES_CONF_FILE = "conf/Species.json"
 START_DATE = datetime(2012, 7, 1)
 END_DATE = datetime(2012, 7, 31)
 
@@ -29,8 +30,9 @@ def main():
         print("You need to provide an ID for the biological species! Exiting...")
         exit()
 
-    # Read configuration:
+    # Read general configuration, and species configuration:
     conf = core.read_conf(CONF_FILE)
+    species_conf = core.read_conf(SPECIES_CONF_FILE)
 
     # Salinity:
     wednesdays = core.wednesdays_between(START_DATE, END_DATE)
@@ -51,7 +53,8 @@ def main():
     temperature_data = core.fill_temporal_gaps(days, temperature_data)
 
     # Create Species object:
-    species = biology.Species(opts.id)
+    species = biology.Species(opts.id, species_conf)
+    print(species.get_temperature_min())
     #species.salinity_suitability_index(salinity_data.values())
 
 

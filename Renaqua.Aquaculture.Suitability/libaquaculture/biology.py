@@ -3,8 +3,9 @@ class Species(object):
     """Description of a given biological species."""
 
     # Constructor:
-    def __init__(self, identifier):
+    def __init__(self, identifier, conf):
         self.id = identifier
+        self.conf = conf
 
     # Public methods:
     def salinity_value_ok(self, salinity):
@@ -21,3 +22,8 @@ class Species(object):
                 n_adequate += 1
 
         return float(n_adequate)/len(salinity_series)
+
+    def get_temperature_min(self):
+        """Returns minimum acceptable temperature for species."""
+
+        return self.conf[self.id]["temperature_min"]
