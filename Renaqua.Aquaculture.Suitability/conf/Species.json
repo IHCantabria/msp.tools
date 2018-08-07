@@ -21,7 +21,7 @@
         "temperature_max": 16
     },
 	"s0004": {
-		"name": "Atlantic Bluefin tuna",
+		"name": "Atlantic bluefin tuna",
         "salinity_min": 30,
         "salinity_max": 40,
         "temperature_min": 18,

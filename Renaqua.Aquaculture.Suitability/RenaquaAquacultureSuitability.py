@@ -10,8 +10,6 @@ from libaquaculture import biology
 # Globals:
 CONF_FILE = "conf/RenaquaAquacultureSuitability.json"
 SPECIES_CONF_FILE = "conf/Species.json"
-START_DATE = datetime(2012, 7, 1)
-END_DATE = datetime(2012, 7, 31)
 
 
 # Functions:
@@ -30,19 +28,23 @@ def main():
         print("You need to provide an ID for the biological species! Exiting...")
         exit()
 
+    if opts.start is None or opts.end is None:
+        print("Both start and end times must be provided! Exiting...")
+        exit()
+
     # Read general configuration, and species configuration:
     conf = core.read_conf(CONF_FILE)
     species_conf = core.read_conf(SPECIES_CONF_FILE)[opts.id]
 
     # Salinity:
-    wednesdays = core.wednesdays_between(START_DATE, END_DATE)
+    wednesdays = core.wednesdays_between(opts.start, opts.end)
     salinity_data = {}
     for wednesday in wednesdays:
         salinity_file = ihdata.SalinityFile(conf, wednesday)
         salinity_data[wednesday] = salinity_file.get_salinity_of(opts.longitude, opts.latitude, opts.depth)
 
     # Temperature:
-    days = core.days_between(START_DATE, END_DATE)
+    days = core.days_between(opts.start, opts.end)
     temperature_data = {}
     for day in days:
         temperature_file = ihdata.TemperatureFile(conf, day)

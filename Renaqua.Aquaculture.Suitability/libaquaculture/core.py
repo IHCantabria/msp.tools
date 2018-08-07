@@ -31,6 +31,16 @@ def parse_args(args=sys.argv[1:]):
                         help="Identifier of biological species. Default: None.",
                         default=None)
 
+    parser.add_argument("--start",
+                        help="Starting date of period to consider (in YYYY-MM-DD format). Default: None.",
+                        type=str,
+                        default=None)
+
+    parser.add_argument("--end",
+                        help="Ending date of period to consider (in YYYY-MM-DD format). Default: None.",
+                        type=str,
+                        default=None)
+
     return parser.parse_args(args)
 
 
@@ -45,8 +55,12 @@ def read_conf(file_name):
 
 def wednesdays_between(start_date, end_date):
     """Returns a list of datetime() objects, representing all the Wednesdays
-    between start_date and end_date, including.
+    between start_date and end_date (which are strings representing dates), including.
     """
+    # Pre-convert dates from str to datetime format:
+    start_date = datetime.strptime(start_date, "%Y-%m-%d")
+    end_date = datetime.strptime(end_date, "%Y-%m-%d")
+
     # 'd' is the amount of days to add to start_date to get the first Wednesday on the list.
     # If current weekday (w) is 2 (wednesday), then d = 0, obviously. For any other value of w,
     # d will be the number of days until next Wednesday... which one can realize is given
@@ -65,9 +79,14 @@ def wednesdays_between(start_date, end_date):
 
 
 def days_between(start_date, end_date):
-    """Returns a list of datetime() objects, representing all the days
-    between start_date and end_date, including.
+    """Returns a list of datetime() objects, representing all the days between start_date
+    and end_date (which are strings representing dates), including.
     """
+    # Pre-convert dates from str to datetime format:
+    start_date = datetime.strptime(start_date, "%Y-%m-%d")
+    end_date = datetime.strptime(end_date, "%Y-%m-%d")
+
+    # Build day list:
     dlist = []
     day = start_date
     while day <= end_date:
