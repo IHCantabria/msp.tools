@@ -3,27 +3,54 @@ class Species(object):
     """Description of a given biological species."""
 
     # Constructor:
-    def __init__(self, identifier, conf):
-        self.id = identifier
+    def __init__(self, conf):
         self.conf = conf
 
     # Public methods:
-    def salinity_value_ok(self, salinity):
+    def is_salinity_ok(self, salinity):
         """Return True if salinity 'salinity' is adequate for us, False otherwise."""
 
-        return self.min_sality < salinity < self.max_sality
+        return self.salinity_min < salinity < self.salinity_max
 
-    def salinity_suitability_index(self, salinity_series):
-        """Return fraction of salinity values in 'salinity_series' that are adequate for us."""
+    def is_temperature_ok(self, temperature):
+        """Return True if temperature 'temperature' is adequate for us, False otherwise."""
 
-        n_adequate = 0
-        for salinity in salinity_series:
-            if self.salinity_value_ok(salinity):
-                n_adequate += 1
+        return self.temperature_min < temperature < self.temperature_max
 
-        return float(n_adequate)/len(salinity_series)
+    def biological_suitability_index(self, salinity_series, temperature_series):
+        """Return fraction of salinity and temperature values
+        in corresponding series that are adequate for us.
+        """
+        n_ok = 0
+        for day in salinity_series:
+            s = salinity_series[day]
+            t = temperature_series[day]
+            if self.is_salinity_ok(s) and self.is_temperature_ok(t):
+                n_ok += 1
 
-    def get_temperature_min(self):
+        return float(n_ok)/len(salinity_series)
+
+    # Public properties:
+    @property
+    def temperature_min(self):
         """Returns minimum acceptable temperature for species."""
 
-        return self.conf[self.id]["temperature_min"]
+        return self.conf["temperature_min"]
+
+    @property
+    def temperature_max(self):
+        """Returns maximum acceptable temperature for species."""
+
+        return self.conf["temperature_max"]
+
+    @property
+    def salinity_min(self):
+        """Returns minimum acceptable salinity for species."""
+
+        return self.conf["salinity_min"]
+
+    @property
+    def salinity_max(self):
+        """Returns maximum acceptable salinity for species."""
+
+        return self.conf["salinity_max"]

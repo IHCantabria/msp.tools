@@ -32,7 +32,7 @@ def main():
 
     # Read general configuration, and species configuration:
     conf = core.read_conf(CONF_FILE)
-    species_conf = core.read_conf(SPECIES_CONF_FILE)
+    species_conf = core.read_conf(SPECIES_CONF_FILE)[opts.id]
 
     # Salinity:
     wednesdays = core.wednesdays_between(START_DATE, END_DATE)
@@ -53,9 +53,8 @@ def main():
     temperature_data = core.fill_temporal_gaps(days, temperature_data)
 
     # Create Species object:
-    species = biology.Species(opts.id, species_conf)
-    print(species.get_temperature_min())
-    #species.salinity_suitability_index(salinity_data.values())
+    species = biology.Species(species_conf)
+    print(species.biological_suitability_index(salinity_data, temperature_data))
 
 
 # Main body:
