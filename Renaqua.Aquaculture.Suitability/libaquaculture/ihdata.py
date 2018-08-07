@@ -165,8 +165,8 @@ class TemperatureFile(NCFile):
         """URL of remote netCDF in THREDDS."""
 
         if self._file_url is None:
-            self._file_url = os.path.join(self.conf["thredds_url_base"],
-                                          self.conf["temperature_url_pattern"].format(DATE=self.date))
+            self._file_url = "/".join([self.conf["thredds_url_base"],
+                                       self.conf["temperature_url_pattern"].format(DATE=self.date)])
 
         return self._file_url
 
