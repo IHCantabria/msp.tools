@@ -1,45 +1,54 @@
 {
     "s0001": {
         "name": "European seabass",
-        "temperature_min": 30,
-        "temperature_max": 40,
-        "salinity_min": 18,
-        "salinity_max": 27
+        "salinity_min": 30,
+        "salinity_max": 40,
+        "temperature_min": 18,
+        "temperature_max": 27
     },
-    "Gilthead seabream": {
-        "temperature_min": 30,
-        "temperature_max": 40,
-        "salinity_min": 18,
-        "salinity_max": 26
+	"s0002": {
+		"name": "Gilthead seabream",
+        "salinity_min": 30,
+        "salinity_max": 40,
+        "temperature_min": 18,
+        "temperature_max": 26
     },
-    "Atlantic salmon": {
-        "temperature_min": 30,
-        "temperature_max": 35,
-        "salinity_min": 6,
-        "salinity_max": 16
+	"s0003": {
+		"name": "Atlantic salmon",
+        "salinity_min": 30,
+        "salinity_max": 35,
+        "temperature_min": 6,
+        "temperature_max": 16
     },
-    "Atlantic bluefin tuna": {
-        "temperature_min": 30,
-        "temperature_max": 40,
-        "salinity_min": 18,
-        "salinity_max": 26
+	"s0004": {
+		"name": "Atlantic Bluefin tuna",
+        "salinity_min": 30,
+        "salinity_max": 40,
+        "temperature_min": 18,
+        "temperature_max": 26
     },
-    "Meagre": {
-        "temperature_min": 30,
-        "temperature_max": 40,
-        "salinity_min": 18,
-        "salinity_max": 26
+	"s0005": {
+		"name": "Meagre",
+        "salinity_min": 30,
+        "salinity_max": 40,
+        "temperature_min": 18,
+        "temperature_max": 26
     },
-    "Greater amberjack": {
-        "temperature_min": 30,
-        "temperature_max": 36,
-        "salinity_min": 20,
-        "salinity_max": 26
+	"s0006": {
+		"name": "Greater amberjack",
+        "salinity_min": 30,
+        "salinity_max": 36,
+        "temperature_min": 20,
+        "temperature_max": 26
     },
-    "Cobia": {
-        "temperature_min": 30,
-        "temperature_max": 35,
-        "salinity_min": 26,
-        "salinity_max": 31
+	"s0007": {
+		"name": "Cobia",
+        "salinity_min": 30,
+        "salinity_max": 35,
+        "temperature_min": 26,
+        "temperature_max": 31
     }
 }
+	
+	
+   
