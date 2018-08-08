@@ -19,18 +19,8 @@ def main():
     # Read command-line options:
     opts = core.parse_args()
 
-    # Check options:
-    if opts.longitude is None or opts.latitude is None:
-        print("Both latitude and longitude must be provided! Exiting...")
-        exit()
-
-    if opts.id is None:
-        print("You need to provide an ID for the biological species! Exiting...")
-        exit()
-
-    if opts.start is None or opts.end is None:
-        print("Both start and end times must be provided! Exiting...")
-        exit()
+    # Sanitize options:
+    opts = core.sanitize_options(opts)
 
     # Read general configuration, and species configuration:
     conf = core.read_conf(CONF_FILE)

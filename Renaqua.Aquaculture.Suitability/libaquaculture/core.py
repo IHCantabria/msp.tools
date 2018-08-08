@@ -44,6 +44,31 @@ def parse_args(args=sys.argv[1:]):
     return parser.parse_args(args)
 
 
+def sanitize_options(opts):
+    """Make sure all required options are passed, and in the correct format."""
+
+    # Check coordinates:
+    if opts.longitude is None or opts.latitude is None:
+        print("Both latitude and longitude must be provided! Exiting...")
+        raise ValueError
+
+    # Check if identifier is given:
+    if opts.id is None:
+        print("You need to provide an ID for the biological species! Exiting...")
+        raise ValueError
+
+    # Check if period is correctly given:
+    try:
+        opts.start = datetime.strptime(opts.start, "%Y-%m-%d")
+        opts.end = datetime.strptime(opts.end, "%Y-%m-%d")
+    except ValueError:
+        raise ValueError("Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+    except TypeError:
+        raise TypeError("Remember both start and end date must be given.")
+
+    return opts
+
+
 def read_conf(file_name):
     """Read configuration, and return it as dictionary."""
     
@@ -55,12 +80,8 @@ def read_conf(file_name):
 
 def wednesdays_between(start_date, end_date):
     """Returns a list of datetime() objects, representing all the Wednesdays
-    between start_date and end_date (which are strings representing dates), including.
+    between start_date and end_date, including.
     """
-    # Pre-convert dates from str to datetime format:
-    start_date = datetime.strptime(start_date, "%Y-%m-%d")
-    end_date = datetime.strptime(end_date, "%Y-%m-%d")
-
     # 'd' is the amount of days to add to start_date to get the first Wednesday on the list.
     # If current weekday (w) is 2 (wednesday), then d = 0, obviously. For any other value of w,
     # d will be the number of days until next Wednesday... which one can realize is given
@@ -80,12 +101,8 @@ def wednesdays_between(start_date, end_date):
 
 def days_between(start_date, end_date):
     """Returns a list of datetime() objects, representing all the days between start_date
-    and end_date (which are strings representing dates), including.
+    and end_date, including.
     """
-    # Pre-convert dates from str to datetime format:
-    start_date = datetime.strptime(start_date, "%Y-%m-%d")
-    end_date = datetime.strptime(end_date, "%Y-%m-%d")
-
     # Build day list:
     dlist = []
     day = start_date
@@ -114,7 +131,7 @@ def confine_to_0_360(n):
 
 
 def confine_to_plus_minus_90(n):
-    """Return number 'n' confned to (-90, 90).
+    """Return number 'n' confined to (-90, 90).
     E.g.:
     33 -> 33
     100 -> -80

@@ -1,5 +1,4 @@
 # Standard libs:
-import os
 import netCDF4 as nc4
 
 # Our libs:
