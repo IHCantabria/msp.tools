@@ -24,7 +24,7 @@ def main():
 
     # Read general configuration, and species configuration:
     conf = core.read_conf(CONF_FILE)
-    species_conf = core.read_conf(SPECIES_CONF_FILE)[opts.id]
+    species_conf = core.get_correct_species_conf(SPECIES_CONF_FILE, opts)
 
     # Salinity:
     wednesdays = core.wednesdays_between(opts.start, opts.end)

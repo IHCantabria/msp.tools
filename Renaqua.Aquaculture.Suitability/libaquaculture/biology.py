@@ -54,3 +54,4 @@ class Species(object):
         """Returns maximum acceptable salinity for species."""
 
         return self.conf["salinity_max"]
+

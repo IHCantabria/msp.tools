@@ -2,8 +2,8 @@
 import sys
 import json
 import argparse
-from datetime import timedelta, datetime
 from scipy.interpolate import interp1d
+from datetime import timedelta, datetime
 
 
 # Functions:
@@ -41,6 +41,31 @@ def parse_args(args=sys.argv[1:]):
                         type=str,
                         default=None)
 
+    parser.add_argument("--name",
+                        help="Name of biological species (if ID not used). Default: None.",
+                        type=str,
+                        default=None)
+
+    parser.add_argument("--temperature-min",
+                        help="Minimum temperature the biological species likes (if ID not used). Default: None.",
+                        type=float,
+                        default=None)
+
+    parser.add_argument("--temperature-max",
+                        help="Maximum temperature the biological species likes (if ID not used). Default: None.",
+                        type=float,
+                        default=None)
+
+    parser.add_argument("--salinity-min",
+                        help="Minimum salinity the biological species likes (if ID not used). Default: None.",
+                        type=float,
+                        default=None)
+
+    parser.add_argument("--salinity-max",
+                        help="Maximum salinity the biological species likes (if ID not used). Default: None.",
+                        type=float,
+                        default=None)
+
     return parser.parse_args(args)
 
 
@@ -49,13 +74,22 @@ def sanitize_options(opts):
 
     # Check coordinates:
     if opts.longitude is None or opts.latitude is None:
-        print("Both latitude and longitude must be provided! Exiting...")
-        raise ValueError
+        raise ValueError("Both latitude and longitude must be provided! Exiting...")
 
     # Check if identifier is given:
     if opts.id is None:
-        print("You need to provide an ID for the biological species! Exiting...")
-        raise ValueError
+        if opts.temperature_min is None or opts.temperature_max is None or opts.salinity_min is None \
+                or opts.salinity_max is None or opts.name is None:
+            msg = "You need to provide either an ID for the biological species, "
+            msg += "or all of its growth characteristics! Exiting..."
+            raise ValueError(msg)
+    else:  # the user did introduce the ID
+        if opts.temperature_min is not None or opts.temperature_max is not None or \
+                opts.salinity_min is not None or  opts.salinity_max is not None or opts.name is not None:
+            # Then the user introduced the characteristics of the species by hand, too
+            # which should not happen. It's either one or the other.
+            msg = "You must provide either an ID or a set of characteristics, not both."
+            raise ValueError(msg)
 
     # Check if period is correctly given:
     try:
@@ -192,3 +226,25 @@ def fill_temporal_gaps(period, data):
     return new_data
 
 
+def get_correct_species_conf(species_conf_file, opts):
+    """Return the correct species_conf dictionary,
+    either by reading from the JSON config file,
+    or from user-provided options.
+    """
+    if opts.id is None:
+        return build_species_conf(opts)
+    else:
+        return read_conf(species_conf_file)[opts.id]
+
+
+def build_species_conf(opts):
+    """Build a configuration dictionary for a species,
+    from user-introduced command-line arguments.
+    """
+    return {
+        "name": opts.name,
+        "temperature_min": opts.temperature_min,
+        "temperature_max": opts.temperature_max,
+        "salinity_min": opts.salinity_min,
+        "salinity_max": opts.salinity_max,
+    }
