@@ -108,6 +108,7 @@ class SalinityFile(NCFile):
         return self._file_url
 
 
+# This class is unused, and candidate for deletion:
 class TemperatureFile(NCFile):
     """An NCFile specifically for temperature."""
 
