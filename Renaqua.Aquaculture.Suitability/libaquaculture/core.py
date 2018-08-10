@@ -76,6 +76,9 @@ def sanitize_options(opts):
     if opts.longitude is None or opts.latitude is None:
         raise ValueError("Both latitude and longitude must be provided! Exiting...")
 
+    if opts.depth < 0:
+        raise ValueError("Invalid depth value. Depth value must be a positive number. e.g Depth 20 = -20")
+
     # Check if identifier is given:
     if opts.id is None:
         if opts.temperature_min is None or opts.temperature_max is None or opts.salinity_min is None \
@@ -105,10 +108,10 @@ def sanitize_options(opts):
 
 def read_conf(file_name):
     """Read configuration, and return it as dictionary."""
-    
+
     with open(file_name) as f:
         conf = json.load(f)
-        
+
     return conf
 
 
