@@ -28,25 +28,25 @@ def main():
 
     # Salinity:
     wednesdays = core.wednesdays_between(opts.start, opts.end)
-    salinity_data = {}
+    salinities = {}
     for wednesday in wednesdays:
         salinity_file = ihdata.SalinityFile(conf, wednesday)
-        salinity_data[wednesday] = salinity_file.get_salinity_of(opts.longitude, opts.latitude, opts.depth)
+        salinities[wednesday] = salinity_file.get_salinity_of(opts.longitude, opts.latitude, opts.depth)
 
     # Temperature:
+    temperature_data = ihdata.TemperatureData(conf)
     days = core.days_between(opts.start, opts.end)
-    temperature_data = {}
+    temperatures = {}
     for day in days:
-        temperature_file = ihdata.TemperatureFile(conf, day)
-        temperature_data[day] = temperature_file.get_temperature_of(opts.longitude, opts.latitude)
+        temperatures[day] = temperature_data.get_temperature_of(opts.longitude, opts.latitude, day)
 
     # Expand salinity (weekly) data to all days. Also, fill missing days (if any) from temperature:
-    salinity_data = core.fill_temporal_gaps(days, salinity_data)
-    temperature_data = core.fill_temporal_gaps(days, temperature_data)
+    salinities = core.fill_temporal_gaps(days, salinities)
+    temperatures = core.fill_temporal_gaps(days, temperatures)
 
     # Create Species object:
     species = biology.Species(species_conf)
-    print(species.biological_suitability_index(salinity_data, temperature_data))
+    print(species.biological_suitability_index(salinities, temperatures))
 
 
 # Main body:

@@ -176,5 +176,83 @@ class TemperatureFile(NCFile):
         return self.date.day - 1
 
 
+class TemperatureData(NCFile):
+    """An NCFile specifically for temperature. Saves all data, not just a file."""
 
+    # Constructor:
+    def __init__(self, conf):
+        super().__init__(conf, None)
+
+        # Joins "file_url" and corresponding data. This way, the second and succesive
+        # times a given file_url is called, data is taken from here, not collected
+        # from THREDDS again:
+        self.monthly_data = {}
+
+        # Helpers:
+        self._i = None
+        self._j = None
+
+    # Public methods:
+    def get_sst(self, url, i, j):
+        """Return value of variable SST at (lon, lat) indices (i, j),
+        for file at URL 'url'.
+        """
+        with nc4.Dataset(url) as nc:
+            return nc.variables["sst"][j, i, :]
+
+    def get_temperature_of(self, lon, lat, day):
+        """Given a (lon, lat) and a date 'day', return corresponding temperature."""
+
+        url = self.file_url(day)
+
+        if url not in self.monthly_data:
+            i, j = self.get_indices_of(lon, lat, day)
+            self.monthly_data[url] = self.get_sst(self.file_url(day), i, j)
+
+        return self.monthly_data[url][self.time_index(day)]
+
+    def get_indices_of(self, lon, lat, day):
+        """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
+
+        if self._i and self._j:
+            return self._i, self._j
+
+        # Confine longitude to (-180, 180) and latitude to (-90, 90):
+        lon = core.confine_to_plus_minus_180(lon)
+        lat = core.confine_to_plus_minus_90(lat)
+
+        # Get longitudes and latitudes:
+        lons = self.get_longitudes(day)
+        lats = self.get_latitudes(day)
+
+        # Get corresponding indices for longitudes (i) and latitudes (j):
+        self._i = core.closest_index(lon, lons)
+        self._j = core.closest_index(lat, lats)
+
+        return self._i, self._j
+
+    def get_longitudes(self, day):
+        """Returns array with longitudes."""
+
+        with nc4.Dataset(self.file_url(day)) as nc:
+            return nc.variables["lon"][:]
+
+    def get_latitudes(self, day):
+        """Returns array with latitudes."""
+
+        with nc4.Dataset(self.file_url(day)) as nc:
+            return nc.variables["lat"][:]
+
+    def file_url(self, day):
+        """URL of remote netCDF in THREDDS."""
+
+        return "/".join([self.conf["thredds_url_base"],
+                         self.conf["temperature_url_pattern"].format(DATE=day)])
+
+    # Static methods:
+    @staticmethod
+    def time_index(day):
+        """Return index in NetCDF, corresponding to current date."""
+
+        return day.day - 1
 
