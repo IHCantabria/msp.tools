@@ -150,19 +150,6 @@ def days_between(start_date, end_date):
     return dlist
 
 
-def months_between(start_date, end_date):
-    """Returns a list of 'YYYY.MM' strings, representing all the months included within,
-    or touched by, the period between start_date and end_date.
-    """
-    mlist = []
-    day = start_date
-    while day <= end_date:
-        mlist.append(day.strftime("%Y.%m"))
-        day += timedelta(days=1)
-
-    return sorted(set(mlist))
-
-
 def closest_index(value, values):
     """Returns index in array 'values', corresponding to the value closest to 'value'."""
 
