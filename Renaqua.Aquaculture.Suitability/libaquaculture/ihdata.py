@@ -98,12 +98,18 @@ class SalinityFile(NCFile):
     def file_url(self):
         """URL of remote netCDF in THREDDS."""
 
+        # Find a suitable file:
         if self._file_url is None:
             for batch in self.conf["salinity_batches"]:
                 test_url = self.conf["salinity_url_pattern"].format(DATE=self.date, BATCH=batch)
                 if self.exists(test_url):
                     self._file_url = test_url
                     break
+
+        # If no suitable file found, print warning:
+        if self._file_url is None:
+            msg = "[WARNING] No salinity file found for date {d}".format(d=self.date)
+            print(msg)
 
         return self._file_url
 

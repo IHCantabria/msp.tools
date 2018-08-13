@@ -31,7 +31,8 @@ def main():
     salinities = {}
     for wednesday in wednesdays:
         salinity_file = ihdata.SalinityFile(conf, wednesday)
-        salinities[wednesday] = salinity_file.get_salinity_of(opts.longitude, opts.latitude, opts.depth)
+        if salinity_file.file_url is not None:
+            salinities[wednesday] = salinity_file.get_salinity_of(opts.longitude, opts.latitude, opts.depth)
 
     # Temperature:
     temperature_data = ihdata.TemperatureData(conf)
