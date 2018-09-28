@@ -18,10 +18,12 @@ Give examples
 
 ### Installing
 
-Python 3.7
+1. Install Python 3.7
+2. Install project dependencies:
+pip install -r requirements.txt 
 
-Install requirements.txt
-
+Usage
+1. Just run
 ```
 python RenaquaAquacultureSuitability.py --longitude -6.5 --latitude 43.8 --id "s0001"
  --start 2008-01-01 --end 2013-01-01
