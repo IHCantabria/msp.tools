@@ -3,52 +3,112 @@
         "name": "European seabass",
         "salinity_min": 30,
         "salinity_max": 40,
-        "temperature_min": 18,
-        "temperature_max": 27
-    },
-	"s0002": {
-		"name": "Gilthead seabream",
-        "salinity_min": 30,
-        "salinity_max": 40,
-        "temperature_min": 18,
+        "temperature_min": 14,
         "temperature_max": 26
     },
-	"s0003": {
-		"name": "Atlantic salmon",
+    "s0002": {
+        "name": "Gilthead seabream",
         "salinity_min": 30,
-        "salinity_max": 35,
+        "salinity_max": 40,
+        "temperature_min": 14,
+        "temperature_max": 28
+    },
+    "s0003": {
+        "name": "Atlantic salmon",
+        "salinity_min": 10,
+        "salinity_max": 38,
         "temperature_min": 6,
-        "temperature_max": 16
+        "temperature_max": 18
     },
-	"s0004": {
-		"name": "Atlantic bluefin tuna",
+    "s0004": {
+        "name": "Atlantic bluefin tuna",
         "salinity_min": 30,
-        "salinity_max": 40,
-        "temperature_min": 18,
-        "temperature_max": 26
+        "salinity_max": 38,
+        "temperature_min": 15,
+        "temperature_max": 30
     },
-	"s0005": {
-		"name": "Meagre",
+    "s0005": {
+        "name": "Meagre",
+        "salinity_min": 29.5,
+        "salinity_max": 39.1,
+        "temperature_min": 14,
+        "temperature_max": 28
+    },
+    "s0006": {
+        "name": "Greater amberjack",
         "salinity_min": 30,
-        "salinity_max": 40,
-        "temperature_min": 18,
-        "temperature_max": 26
+        "salinity_max": 38,
+        "temperature_min": 14,
+        "temperature_max": 28
     },
-	"s0006": {
-		"name": "Greater amberjack",
-        "salinity_min": 30,
-        "salinity_max": 36,
-        "temperature_min": 20,
-        "temperature_max": 26
-    },
-	"s0007": {
-		"name": "Cobia",
+    "s0007": {
+        "name": "Cobia",
         "salinity_min": 30,
         "salinity_max": 35,
         "temperature_min": 26,
         "temperature_max": 31
+    },
+    "s0008": {
+        "name": "Atlantic cod",
+        "salinity_min": 6,
+        "salinity_max": 38,
+        "temperature_min": 4,
+        "temperature_max": 15
+    },
+    "s0009": {
+        "name": "Blackspot seabream",
+        "salinity_min": 34.5,
+        "salinity_max": 37.8,
+        "temperature_min": 12,
+        "temperature_max": 21
+    },
+    "s0010": {
+        "name": "Atlantic wreckfish",
+        "salinity_min": 32.4,
+        "salinity_max": 37.8,
+        "temperature_min": 12,
+        "temperature_max": 20
+    },
+    "s0011": {
+        "name": "Common dentex",
+        "salinity_min": 35.4,
+        "salinity_max": 38.8,
+        "temperature_min": 15,
+        "temperature_max": 28
+    },
+    "s0012": {
+        "name": "Common dolphinfish",
+        "salinity_min": 16,
+        "salinity_max": 36.4,
+        "temperature_min": 20,
+        "temperature_max": 30
+    },
+    "s0013": {
+        "name": "Dusky grouper",
+        "salinity_min": 33.2,
+        "salinity_max": 37.2,
+        "temperature_min": 14,
+        "temperature_max": 23
+    },
+    "s0014": {
+        "name": "Flathead grey mullet",
+        "salinity_min": 30,
+        "salinity_max": 38,
+        "temperature_min": 15,
+        "temperature_max": 30
+    },
+    "s0015": {
+        "name": "Red porgy",
+        "salinity_min": 31.6,
+        "salinity_max": 38,
+        "temperature_min": 15,
+        "temperature_max": 26
+    },
+    "s0016": {
+        "name": "Rainbow trout",
+        "salinity_min": 0,
+        "salinity_max": 35,
+        "temperature_min": 6,
+        "temperature_max": 18
     }
 }
-	
-	
-   
