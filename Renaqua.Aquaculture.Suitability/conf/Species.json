@@ -3,43 +3,43 @@
         "name": "European seabass",
         "salinity_min": 30,
         "salinity_max": 40,
-        "temperature_min": 14,
-        "temperature_max": 26
+        "temperature_min": 18,
+        "temperature_max": 27
     },
     "s0002": {
         "name": "Gilthead seabream",
         "salinity_min": 30,
         "salinity_max": 40,
-        "temperature_min": 14,
-        "temperature_max": 28
+        "temperature_min": 18,
+        "temperature_max": 26
     },
     "s0003": {
         "name": "Atlantic salmon",
-        "salinity_min": 10,
-        "salinity_max": 38,
+        "salinity_min": 30,
+        "salinity_max": 35,
         "temperature_min": 6,
-        "temperature_max": 18
+        "temperature_max": 16
     },
     "s0004": {
         "name": "Atlantic bluefin tuna",
         "salinity_min": 30,
-        "salinity_max": 38,
-        "temperature_min": 15,
-        "temperature_max": 30
+        "salinity_max": 40,
+        "temperature_min": 18,
+        "temperature_max": 26
     },
     "s0005": {
         "name": "Meagre",
-        "salinity_min": 29.5,
-        "salinity_max": 39.1,
-        "temperature_min": 14,
-        "temperature_max": 28
+        "salinity_min": 30,
+        "salinity_max": 40,
+        "temperature_min": 18,
+        "temperature_max": 26
     },
     "s0006": {
         "name": "Greater amberjack",
         "salinity_min": 30,
-        "salinity_max": 38,
-        "temperature_min": 14,
-        "temperature_max": 28
+        "salinity_max": 36,
+        "temperature_min": 20,
+        "temperature_max": 26
     },
     "s0007": {
         "name": "Cobia",

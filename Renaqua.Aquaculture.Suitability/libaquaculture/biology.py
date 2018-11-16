@@ -10,12 +10,12 @@ class Species(object):
     def is_salinity_ok(self, salinity):
         """Return True if salinity 'salinity' is adequate for us, False otherwise."""
 
-        return self.salinity_min < salinity < self.salinity_max
+        return self.salinity_min < float(salinity) < self.salinity_max
 
     def is_temperature_ok(self, temperature):
         """Return True if temperature 'temperature' is adequate for us, False otherwise."""
 
-        return self.temperature_min < temperature < self.temperature_max
+        return self.temperature_min < float(temperature) < self.temperature_max
 
     def biological_suitability_index(self, salinity_series, temperature_series):
         """Return fraction of salinity and temperature values
@@ -27,6 +27,8 @@ class Species(object):
             t = temperature_series[day]
             if self.is_salinity_ok(s) and self.is_temperature_ok(t):
                 n_ok += 1
+        print(n_ok)
+        print(len(salinity_series))
 
         return float(n_ok)/len(salinity_series)
 
@@ -54,4 +56,3 @@ class Species(object):
         """Returns maximum acceptable salinity for species."""
 
         return self.conf["salinity_max"]
-
