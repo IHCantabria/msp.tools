@@ -1,3 +1,4 @@
+autopep8==1.4.3
 beautifulsoup4==4.6.0
 certifi==2018.4.16
 cftime==1.0.0
@@ -10,6 +11,7 @@ lxml==4.2.4
 MarkupSafe==1.0
 netCDF4==1.4.0
 numpy==1.15.0
+pycodestyle==2.4.0
 Pydap==3.2.2
 requests==2.19.1
 scipy==1.1.0

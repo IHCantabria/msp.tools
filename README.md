@@ -25,8 +25,8 @@ pip install -r requirements.txt
 Usage
 1. Just run
 ```
-python RenaquaAquacultureSuitability.py --longitude -6.5 --latitude 43.8 --id "s0001"
- --start 2008-01-01 --end 2013-01-01
+python RenaquaAquacultureSuitability.py --longitude 6.848105 --latitude 54.916104 --id "s0003"
+ --start 1993-01-01 --end 1993-01-03
 ```
 
 ```
