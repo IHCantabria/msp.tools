@@ -1,4 +1,4 @@
 {
     "thredds_url_base": "http://193.144.208.179:8080/thredds/dodsC",
-    "Copernicus": "copernicus/Copernicus.nc"
+    "Copernicus": "copernicus_1/CMEMS/GLOBAL_REANALYSIS_PHY_001_030.nc"
 }
