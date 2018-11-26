@@ -78,7 +78,6 @@ class TemperatureData(NCFile):
             self.monthly_data[url] = self.get_sst(self.file_url(), i, j, i_day)
             print(day)
 
-        # [self.time_index(day)] // ToDo: Revisar este cambio, puede que afecte
         return self.monthly_data[url]
 
     def get_indices_of(self, lon, lat, day):
