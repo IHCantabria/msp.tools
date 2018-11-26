@@ -71,11 +71,11 @@ class TemperatureData(NCFile):
     def get_temperature_of(self, lon, lat, day):
         """Given a (lon, lat) and a date 'day', return corresponding temperature."""
 
-        url = self.file_url(day)
+        url = self.file_url()
 
         if url not in self.monthly_data:
             i, j, i_day = self.get_indices_of(lon, lat, day)
-            self.monthly_data[url] = self.get_sst(self.file_url(day), i, j, i_day)
+            self.monthly_data[url] = self.get_sst(self.file_url(), i, j, i_day)
             print(day)
 
         return self.monthly_data[url]#[self.time_index(day)] // ToDo: Revisar este cambio, puede que afecte
@@ -108,22 +108,22 @@ class TemperatureData(NCFile):
     def get_longitudes(self, day):
         """Returns array with longitudes."""
 
-        with nc4.Dataset(self.file_url(day)) as nc:
+        with nc4.Dataset(self.file_url()) as nc:
             return nc.variables["longitude"][:]
 
     def get_latitudes(self, day):
         """Returns array with latitudes."""
 
-        with nc4.Dataset(self.file_url(day)) as nc:
+        with nc4.Dataset(self.file_url()) as nc:
             return nc.variables["latitude"][:]
     
     def get_days(self, day):
         """Returns array with times."""
 
-        with nc4.Dataset(self.file_url(day)) as nc:
+        with nc4.Dataset(self.file_url()) as nc:
             return nc.variables["time"][:]
 
-    def file_url(self, day):
+    def file_url(self):
         """URL of remote netCDF in THREDDS."""
 
         return "/".join([self.conf["thredds_url_base"],
@@ -164,12 +164,12 @@ class SalinityData(NCFile):
     def get_salinity_of(self, lon, lat, day):
         """Given a (lon, lat) and a date 'day', return corresponding salinity."""
 
-        url = self.file_url(day)
+        url = self.file_url()
 
         if url not in self.monthly_data:
             i, j = self.get_indices_of(lon, lat, day)
             self.monthly_data[url] = self.get_salinity(
-                self.file_url(day), i, j)
+                self.file_url(), i, j)
 
         return self.monthly_data[url][self.time_index(day)]
 
@@ -194,16 +194,16 @@ class SalinityData(NCFile):
     def get_longitudes(self, day):
         """Returns array with longitudes."""
 
-        with nc4.Dataset(self.file_url(day)) as nc:
+        with nc4.Dataset(self.file_url()) as nc:
             return nc.variables["longitude"][:]
 
     def get_latitudes(self, day):
         """Returns array with latitudes."""
 
-        with nc4.Dataset(self.file_url(day)) as nc:
+        with nc4.Dataset(self.file_url()) as nc:
             return nc.variables["latitude"][:]
 
-    def file_url(self, day):
+    def file_url(self):
         """URL of remote netCDF in THREDDS."""
 
         return "/".join([self.conf["thredds_url_base"],
