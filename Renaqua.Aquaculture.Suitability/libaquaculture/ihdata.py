@@ -78,7 +78,8 @@ class TemperatureData(NCFile):
             self.monthly_data[url] = self.get_sst(self.file_url(), i, j, i_day)
             print(day)
 
-        return self.monthly_data[url]#[self.time_index(day)] // ToDo: Revisar este cambio, puede que afecte
+        # [self.time_index(day)] // ToDo: Revisar este cambio, puede que afecte
+        return self.monthly_data[url]
 
     def get_indices_of(self, lon, lat, day):
         """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
@@ -98,8 +99,8 @@ class TemperatureData(NCFile):
         self._i = core.closest_index(lon, lons)
         self._j = core.closest_index(lat, lats)
 
-        delta = day - datetime(1950,1,1)
-        delta_hour = delta.days * 24
+        delta = day - datetime(1950, 1, 1)
+        delta_hour = delta.days * 24 + 12
         self._d = core.closest_index(delta_hour, days)
         # Get indices and print closest longitudes and latitudes corresponding to indices
         print(lons[self._i], lats[self._j])
@@ -116,7 +117,7 @@ class TemperatureData(NCFile):
 
         with nc4.Dataset(self.file_url()) as nc:
             return nc.variables["latitude"][:]
-    
+
     def get_days(self, day):
         """Returns array with times."""
 
