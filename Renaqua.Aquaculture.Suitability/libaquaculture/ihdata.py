@@ -154,12 +154,18 @@ class SalinityData(NCFile):
         self._j = None
 
     # Public methods:
-    def get_salinity(self, url, i, j):
+    def get_days(self, day):
+        """Returns array with times."""
+
+        with nc4.Dataset(self.file_url()) as nc:
+            return nc.variables["time"][:]
+
+    def get_salinity(self, url, i, j, i_day):
         """Return value of variable salinity at (lon, lat) indices (i, j),
         for file at URL 'url'.
         """
         with nc4.Dataset(url) as nc:
-            return nc.variables["so"][:, 0, j, i]
+            return nc.variables["so"][i_day, 0, j, i]
 
     def get_salinity_of(self, lon, lat, day):
         """Given a (lon, lat) and a date 'day', return corresponding salinity."""
@@ -167,29 +173,36 @@ class SalinityData(NCFile):
         url = self.file_url()
 
         if url not in self.monthly_data:
-            i, j = self.get_indices_of(lon, lat, day)
+            i, j, i_day = self.get_indices_of(lon, lat, day)
             self.monthly_data[url] = self.get_salinity(
-                self.file_url(), i, j)
+                self.file_url(), i, j, i_day)
 
-        return self.monthly_data[url][self.time_index(day)]
+        return self.monthly_data[url]
 
     def get_indices_of(self, lon, lat, day):
         """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
 
-        if self._i and self._j:
-            return self._i, self._j
+        if self._i and self._j and self._d:
+            return self._i, self._j, self._d
 
         lat = core.confine_to_plus_minus_90(lat)
 
         # Get longitudes and latitudes:
         lons = self.get_longitudes(day)
         lats = self.get_latitudes(day)
+        days = self.get_days(day)
+        print(lons, lats)
 
         # Get corresponding indices for longitudes (i) and latitudes (j):
         self._i = core.closest_index(lon, lons)
         self._j = core.closest_index(lat, lats)
 
-        return self._i, self._j
+        delta = day - datetime(1950, 1, 1)
+        delta_hour = delta.days * 24 + 12
+        self._d = core.closest_index(delta_hour, days)
+        # Get indices and print closest longitudes and latitudes corresponding to indices
+        print(lons[self._i], lats[self._j])
+        return self._i, self._j, self._d
 
     def get_longitudes(self, day):
         """Returns array with longitudes."""
