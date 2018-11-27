@@ -58,6 +58,7 @@ class TemperatureData(NCFile):
         # Helpers:
         self._i = None
         self._j = None
+        self._d = None
 
     # Public methods:
     def get_sst(self, url, i, j, i_day):
@@ -73,10 +74,10 @@ class TemperatureData(NCFile):
 
         url = self.file_url()
 
-        if url not in self.monthly_data:
-            i, j, i_day = self.get_indices_of(lon, lat, day)
-            self.monthly_data[url] = self.get_sst(self.file_url(), i, j, i_day)
-            print(day)
+        #if url not in self.monthly_data:
+        i, j, i_day = self.get_indices_of(lon, lat, day)
+        self.monthly_data[url] = self.get_sst(self.file_url(), i, j, i_day)
+        print(day)
 
         return self.monthly_data[url]
 
@@ -84,7 +85,8 @@ class TemperatureData(NCFile):
         """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
 
         if self._i and self._j and self._d:
-            return self._i, self._j, self.d
+            self._d = self._d + 1
+            return self._i, self._j, self._d
 
         lat = core.confine_to_plus_minus_90(lat)
 
@@ -172,10 +174,10 @@ class SalinityData(NCFile):
 
         url = self.file_url()
 
-        if url not in self.monthly_data:
-            i, j, i_day = self.get_indices_of(lon, lat, day)
-            self.monthly_data[url] = self.get_salinity(
-                self.file_url(), i, j, i_day)
+        #if url not in self.monthly_data:
+        i, j, i_day = self.get_indices_of(lon, lat, day)
+        self.monthly_data[url] = self.get_salinity(
+            self.file_url(), i, j, i_day)
 
         return self.monthly_data[url]
 
@@ -183,6 +185,7 @@ class SalinityData(NCFile):
         """Given longitude 'lon' and latitude 'lat', return closest indices (i, j)."""
 
         if self._i and self._j and self._d:
+            self._d = self._d + 1
             return self._i, self._j, self._d
 
         lat = core.confine_to_plus_minus_90(lat)
