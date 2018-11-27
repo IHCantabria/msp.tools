@@ -74,10 +74,9 @@ class TemperatureData(NCFile):
 
         url = self.file_url()
 
-        #if url not in self.monthly_data:
+        # if url not in self.monthly_data:
         i, j, i_day = self.get_indices_of(lon, lat, day)
         self.monthly_data[url] = self.get_sst(self.file_url(), i, j, i_day)
-        print(day)
 
         return self.monthly_data[url]
 
@@ -94,7 +93,6 @@ class TemperatureData(NCFile):
         lons = self.get_longitudes(day)
         lats = self.get_latitudes(day)
         days = self.get_days(day)
-        print(lons, lats)
 
         # Get corresponding indices for longitudes (i) and latitudes (j):
         self._i = core.closest_index(lon, lons)
@@ -104,7 +102,6 @@ class TemperatureData(NCFile):
         delta_hour = delta.days * 24 + 12
         self._d = core.closest_index(delta_hour, days)
         # Get indices and print closest longitudes and latitudes corresponding to indices
-        print(lons[self._i], lats[self._j])
         return self._i, self._j, self._d
 
     def get_longitudes(self, day):
@@ -174,7 +171,7 @@ class SalinityData(NCFile):
 
         url = self.file_url()
 
-        #if url not in self.monthly_data:
+        # if url not in self.monthly_data:
         i, j, i_day = self.get_indices_of(lon, lat, day)
         self.monthly_data[url] = self.get_salinity(
             self.file_url(), i, j, i_day)
@@ -194,7 +191,6 @@ class SalinityData(NCFile):
         lons = self.get_longitudes(day)
         lats = self.get_latitudes(day)
         days = self.get_days(day)
-        print(lons, lats)
 
         # Get corresponding indices for longitudes (i) and latitudes (j):
         self._i = core.closest_index(lon, lons)
@@ -204,7 +200,6 @@ class SalinityData(NCFile):
         delta_hour = delta.days * 24 + 12
         self._d = core.closest_index(delta_hour, days)
         # Get indices and print closest longitudes and latitudes corresponding to indices
-        print(lons[self._i], lats[self._j])
         return self._i, self._j, self._d
 
     def get_longitudes(self, day):
