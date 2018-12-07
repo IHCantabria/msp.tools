@@ -1,6 +1,0 @@
-{
-    "thredds_url_base": "http://193.144.213.180:8080/thredds/dodsC",
-    "salinity_url_pattern": "http://193.144.213.180:8080/thredds/dodsC/Salinity/ARMOR3D_REPv3-1_{DATE:%Y%m%d}_{BATCH}.nc",
-    "salinity_batches": ["20140420", "20130910"],
-    "temperature_url_pattern": "SST/SST_GHRSST/Global005/SST_GHRSST_Global005_{DATE:%Y.%m}.nc"
-}

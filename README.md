@@ -1,43 +1,55 @@
-# Renaqua.Aquaculture.Suitability
+# MSP
 
-> Screening tool for aquaculture suitability
+> Marine Spatial Planning
 
 ## Getting Started
 
-Toolbox developed in the framework of Renaqua project. The toolbox will be integrated in a Screening tool for calculate aquaculture suitability. It is organise in four tools : biological suitability for each specie & structural suitability for cage &  operational suitability for carry out operation and maintenance activities. & total suitability 
+The IH-MSP Platform (Marine Spatial Planning http://msp.ihcantabria.com/) integrates technical and scientific knowledge from IHCantabria, as well as the present set of "Screening Tools" in relation with marine activities suitability, aquaculture and marine energy, and their planning in marine area.
+
+It is organized in four main tools:
+    - Biological and Energy resouce suitability
+    - Structural suitability
+    - Operational suitability (for carry out operation and maintenance activities)
+    - Fish Farming & Renewable Energy Opportunities
+
+The current version only implements "Biological Suitability Tool". The aim of the Biological Suitability tool is to assess the growth probability of species according to their biological charecteristics, in this case, according to their suitable temperature and salinity ranges. It makes use of Copernicus Marine Environment Monitoring Service product, specifically analyzes Global Ocean Physics Reanalysis  (GLOBAL_REANALYSIS_PHY_001_030), so the CMEMS product, http://marine.copernicus.eu/, is a key element of this tool.
+
 
 ### Prerequisites
 
-In case netCDF files are stored in thredds which need home authenticator account, you need add RC files (\\docs\conf_DAP) in your pc C:\Users\XXXX. Remember add a dot "." to .dodsrc file. This change must be carry out using terminal (Windows)
-
-source: http://docs.opendap.org/index.php/DAP_Clients_-_Authentication#Matlab.2C_Ferret.2C_Other_applications_that_use_NetCDF_C
-
-
-Give examples
-
+Check out connection http://thredds.ihcantabria.com/catalog/copernicus/CMEMS/catalog.xml"
+        
 
 ### Installing
 
 1. Install Python 3.7
-2. Install project dependencies:
-pip install -r requirements.txt 
-
-Usage
-1. Just run
-```
-python RenaquaAquacultureSuitability.py --longitude -6.5 --latitude 43.8 --id "s0001"
- --start 2008-01-01 --end 2013-01-01
+2. Download this repository:
+```sh
+git clone https://github.com/ihcantabria/msp.git
 ```
 
+3. Configuration
+A basic configuration can be edited in `msp/config.py`. You can set logging options and data source for calculating.
+
+4. Install using pip:
+Optionally, we recommend use [virtualenv](https://virtualenv.pypa.io/en/latest/)
+
+```sh
+pip install git+https://github.com/ihcantabria/msp.tools@master
 ```
-python RenaquaAquacultureSuitability.py --longitude -6.5 --latitude 43.8 --name “Sardina” --temperature-min 18 --temperature-max 27--salinity-min 30 --salinity-max 40
---start 2008-01-01 --end 2013-01-01
+
+### Usage
+
+```python
+import msp
+params = {
+    "point": { "lon": -6.5, "lat": 43.8 },"specie": { "name": 'European seabass', "salinity_min": 30, "salinity_max": 40, "temperature_min": 18, "temperature_max": 26 }, "dates": { "ini": '2015-01-01', "end": '2015-03-01' }}
+
+msp.run_biological(params)
 ```
 
 ## Versioning
-
-
+v0.5 includes Biological Suitability Tool
 
 ## License
-
-
+license:gpl GNU General Public License v3.0
