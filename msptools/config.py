@@ -5,7 +5,7 @@ CONFIG = {
     },
     "copernicus" :{
         "global_reanalysis_physical": {
-            "catalog": "http://193.144.208.179:8080/thredds/catalog/copernicus_1/CMEMS/catalog.xml",
+            "catalog": "http://thredds.ihcantabria.com/catalog/copernicus/CMEMS/catalog.xml",
             "vars": {
                 "temperature": "thetao",
                 "salinity": "so"
