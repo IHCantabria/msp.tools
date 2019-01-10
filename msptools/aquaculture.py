@@ -12,7 +12,8 @@ from msptools.config import CONFIG
 logger = logging.getLogger("msp.aquaculture")
 logger.setLevel(logging.getLevelName(CONFIG["log"]["level"]))
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 file_handler = logging.FileHandler(CONFIG["log"]["filepath"])
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
@@ -27,27 +28,38 @@ def run_biological(params):
     return get_biological_probability(specie, point, dates)
 
 
+def load_historical_serie(params):
+    """Load data serie for salinity and temperature in a point between dates"""
+    logger.debug("Load ocean data from web")
+    specie, point, dates = core.parse_input_web(params)
+    return copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
+        point, dates)
+
+
 def get_biological_probability(specie_config, point, dates):
     """It calculates the probability of growing specie, for a specific point and set period.
-        To this end:
-                1 Download data for the specific point and set period from Copernicus provider
-                2 Set up the suitable temperature and salinity range growth of the study specie
-                3 Select suitable days of data period downloaded in order to calculate the probability of growing
+                                                                                                                                To this end:
+                                                                                                                                                                                                                                                                1 Download data for the specific point and set period from Copernicus provider
+                                                                                                                                                                                                                                                                2 Set up the suitable temperature and salinity range growth of the study specie
+                                                                                                                                                                                                                                                                3 Select suitable days of data period downloaded in order to calculate the probability of growing
     """
 
-    values_from_global_reanalysis = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(point, dates)
+    values_from_global_reanalysis = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
+        point, dates)
     specie = biology.Species(specie_config)
-    probability = specie.biological_suitability_index(values_from_global_reanalysis)
+    probability = specie.biological_suitability_index(
+        values_from_global_reanalysis)
 
     return probability
 
-
 # Functions:
+
 
 def run_from_cli():
     logger.debug("Starting from CLI")
     specie, point, dates = core.parse_args(sys.argv[1:])
     logger.info(get_biological_probability(specie, point, dates))
+
 
 # Main body:
 if __name__ == '__main__':
