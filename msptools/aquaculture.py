@@ -32,16 +32,25 @@ def load_historical_serie(params):
     """Load data serie for salinity and temperature in a point between dates"""
     logger.debug("Load ocean data from web")
     specie, point, dates = core.parse_input_web(params)
-    return copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
+    data_serie = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
         point, dates)
+    parsed_data_serie = standarize_data(data_serie)
+    return parsed_data_serie
+
+
+def standarize_data(data_serie):
+    """ Adapt data for web requests """
+    adapted_data = {}
+    i = 0
+    for (key, values) in data_serie.items():
+        values['date'] = key
+        adapted_data[i] = values
+        i += 1
+    return adapted_data
 
 
 def get_biological_probability(specie_config, point, dates):
-    """It calculates the probability of growing specie, for a specific point and set period.
-                                                                                                                                To this end:
-                                                                                                                                                                                                                                                                1 Download data for the specific point and set period from Copernicus provider
-                                                                                                                                                                                                                                                                2 Set up the suitable temperature and salinity range growth of the study specie
-                                                                                                                                                                                                                                                                3 Select suitable days of data period downloaded in order to calculate the probability of growing
+    """It calculates the probability of growing specie, for a specific point and set period.To this end: 1) Download data for the specific point and set period from Copernicus provider, 2) Set up the suitable temperature and salinity range growth of the study specie, 3) Select suitable days of data period downloaded in order to calculate the probability of growing
     """
 
     values_from_global_reanalysis = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
