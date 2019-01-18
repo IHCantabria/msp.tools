@@ -39,14 +39,31 @@ def load_historical_serie(params):
 
 
 def standarize_data(data_serie):
-    """ Adapt data for web requests """
-    adapted_data = {}
+    """ Normalize data from thredds """
+    parsed_data_serie = {}
     i = 0
     for (key, values) in data_serie.items():
-        values['date'] = key
-        adapted_data[i] = values
+        # set standarized data object
+        data = {}
+        data['date'] = key
+        data['measures'] = _get_data_measures(values)
+
+        parsed_data_serie[key.timestamp()] = data
         i += 1
-    return adapted_data
+    return parsed_data_serie
+
+
+def _get_data_measures(thredds_values):
+    measures = []
+    for variable in CONFIG["copernicus"]["variables"]:
+        measure = {
+            "name": variable["name"],
+            "alias": variable["alias"],
+            "units": variable["units"],
+            "value": thredds_values[variable["alias"]]
+        }
+        measures.append(measure)
+    return measures
 
 
 def get_biological_probability(specie_config, point, dates):
