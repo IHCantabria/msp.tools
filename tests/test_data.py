@@ -47,8 +47,8 @@ class Test_Data(unittest.TestCase):
         expected_value = 18.6481216738  # temp on 2/1/2015(day/month/year)
         data = aquaculture.load_historical_serie(self.params)
         self.assertIsNotNone(data)
-        self.assertEqual(len(data), 60)
-        self.assertIsInstance(data[timestamp]['date'], datetime.date)
-        self.assertEqual(len(data[timestamp]['measures']), 2)
-        self.assertEqual(data[timestamp]['measures']
+        self.assertEqual(len(data['serie']), 60)
+        self.assertIsInstance(data['serie'][timestamp]['date'], datetime.date)
+        self.assertEqual(len(data['serie'][timestamp]['measures']), 2)
+        self.assertEqual(data['serie'][timestamp]['measures']
                          [0]['value'], expected_value)
