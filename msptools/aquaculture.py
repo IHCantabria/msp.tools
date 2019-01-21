@@ -40,7 +40,10 @@ def load_historical_serie(params):
 
 def standarize_data(data_serie):
     """ Normalize data from thredds """
-    parsed_data_serie = {}
+    parsed_data_serie = {
+        "source": CONFIG["copernicus"]["source"],
+        "serie": {}
+    }
     i = 0
     for (key, values) in data_serie.items():
         # set standarized data object
@@ -48,7 +51,7 @@ def standarize_data(data_serie):
         data['date'] = key
         data['measures'] = _get_data_measures(values)
 
-        parsed_data_serie[key.timestamp()] = data
+        parsed_data_serie['serie'][key.timestamp()] = data
         i += 1
     return parsed_data_serie
 
