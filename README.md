@@ -12,27 +12,26 @@ It is organized in four main tools:
     - Operational suitability (for carry out operation and maintenance activities)
     - Fish Farming & Renewable Energy Opportunities
 
-The current version only implements "Biological Suitability Tool". The aim of the Biological Suitability tool is to assess the growth probability of species according to their biological charecteristics, in this case, according to their suitable temperature and salinity ranges. It makes use of Copernicus Marine Environment Monitoring Service product, specifically analyzes Global Ocean Physics Reanalysis  (GLOBAL_REANALYSIS_PHY_001_030), so the CMEMS product, http://marine.copernicus.eu/, is a key element of this tool.
-
+The current version only implements "Biological Suitability Tool". The aim of the Biological Suitability tool is to assess the growth probability of species according to their biological charecteristics, in this case, according to their suitable temperature and salinity ranges. It makes use of Copernicus Marine Environment Monitoring Service product, specifically analyzes Global Ocean Physics Reanalysis (GLOBAL_REANALYSIS_PHY_001_030), so the CMEMS product, http://marine.copernicus.eu/, is a key element of this tool.
 
 ### Prerequisites
 
 Check out connection http://thredds.ihcantabria.com/catalog/copernicus/CMEMS/catalog.xml"
-        
 
 ### Installing
 
 1. Install Python 3.7
 2. Download this repository:
+
 ```sh
 git clone https://github.com/ihcantabria/msp.git
 ```
 
 3. Configuration
-A basic configuration can be edited in `msp/config.py`. You can set logging options and data source for calculating.
+   A basic configuration can be edited in `msp/config.py`. You can set logging options and data source for calculating.
 
 4. Install using pip:
-Optionally, we recommend use [virtualenv](https://virtualenv.pypa.io/en/latest/)
+   Optionally, we recommend use [virtualenv](https://virtualenv.pypa.io/en/latest/)
 
 ```sh
 pip install git+https://github.com/ihcantabria/msp.tools@master
@@ -49,7 +48,9 @@ msp.run_biological(params)
 ```
 
 ## Versioning
-v0.5 includes Biological Suitability Tool
+
+v0.7 includes Biological Suitability Tool
 
 ## License
+
 license:gpl GNU General Public License v3.0

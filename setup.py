@@ -7,7 +7,7 @@ def readme():
 
 
 setup(name='msptools',
-      version='0.6',
+      version='0.7',
       description='Marine Spatial Planning: Aquaculture',
       url='https://github.com/ihcantabria/msptools',
       author='Felipe Maza',
