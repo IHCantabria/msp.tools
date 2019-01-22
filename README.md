@@ -21,21 +21,18 @@ Check out connection http://thredds.ihcantabria.com/catalog/copernicus/CMEMS/cat
 ### Installing
 
 1. Install Python 3.7
-2. Download this repository:
 
-```sh
-git clone https://github.com/ihcantabria/msp.git
-```
-
-3. Configuration
-   A basic configuration can be edited in `msp/config.py`. You can set logging options and data source for calculating.
-
-4. Install using pip:
-   Optionally, we recommend use [virtualenv](https://virtualenv.pypa.io/en/latest/)
+2. Install using pip:
+Optionally, we recommend use [virtualenv](https://virtualenv.pypa.io/en/latest/)
 
 ```sh
 pip install git+https://github.com/ihcantabria/msp.tools@master
 ```
+
+3. Configuration
+A basic configuration can be edited in `<env_path>/lib/<python_version>/site-package/msptools/config.py`. You can set logging options and data source for calculating.
+
+
 
 ### Usage
 
