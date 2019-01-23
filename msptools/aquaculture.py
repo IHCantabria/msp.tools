@@ -39,34 +39,29 @@ def load_historical_serie(params):
 
 
 def standarize_data(data_serie):
-    """ Normalize data from thredds """
-    parsed_data_serie = {
+    """ Normalize data from thredds to a more usable format"""
+    standarized_data = {
         "source": CONFIG["copernicus"]["source"],
-        "serie": {}
+        "measures": []
     }
-    i = 0
-    for (key, values) in data_serie.items():
-        # set standarized data object
-        data = {}
-        data['date'] = key
-        data['measures'] = _get_data_measures(values)
-
-        parsed_data_serie['serie'][key.timestamp()] = data
-        i += 1
-    return parsed_data_serie
-
-
-def _get_data_measures(thredds_values):
-    measures = []
-    for variable in CONFIG["copernicus"]["variables"]:
+    for var in CONFIG["copernicus"]["variables"]:
         measure = {
-            "name": variable["name"],
-            "alias": variable["alias"],
-            "units": variable["units"],
-            "value": thredds_values[variable["alias"]]
+            "var_name": var["name"],
+            "var_alias": var["alias"],
+            "units": var["units"],
+            "values": _get_values_for_variable(var["alias"], data_serie)
         }
-        measures.append(measure)
-    return measures
+        standarized_data["measures"].append(measure)
+    return standarized_data
+
+
+def _get_values_for_variable(var_name, data_serie):
+    measure_values = []
+    for (key, values) in data_serie.items():
+        var_value = values[var_name]
+        measured_data = [key.timestamp(), var_value]
+        measure_values.append(measured_data)
+    return measure_values
 
 
 def get_biological_probability(specie_config, point, dates):

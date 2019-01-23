@@ -23,16 +23,14 @@ Check out connection http://thredds.ihcantabria.com/catalog/copernicus/CMEMS/cat
 1. Install Python 3.7
 
 2. Install using pip:
-Optionally, we recommend use [virtualenv](https://virtualenv.pypa.io/en/latest/)
+   Optionally, we recommend use [virtualenv](https://virtualenv.pypa.io/en/latest/)
 
 ```sh
 pip install git+https://github.com/ihcantabria/msp.tools@master
 ```
 
 3. Configuration
-A basic configuration can be edited in `<env_path>/lib/<python_version>/site-package/msptools/config.py`. You can set logging options and data source for calculating.
-
-
+   A basic configuration can be edited in `<env_path>/lib/<python_version>/site-package/msptools/config.py`. You can set logging options and data source for calculating.
 
 ### Usage
 
@@ -46,7 +44,7 @@ msp.run_biological(params)
 
 ## Versioning
 
-v0.7 includes Biological Suitability Tool
+v0.8 includes Biological Suitability Tool
 
 ## License
 
