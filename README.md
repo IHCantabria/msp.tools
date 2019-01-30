@@ -32,8 +32,6 @@ pip install git+https://github.com/ihcantabria/msp.tools@master
 3. Configuration
    A basic configuration can be edited in `<env_path>/lib/<python_version>/site-package/msptools/config.py`. You can set logging options and data source for calculating.
 
-3) Configuration
-   A basic configuration can be edited in `<env_path>/lib/<python_version>/site-package/msptools/config.py`. You can set logging options and data source for calculating.
 
 ### Usage
 
@@ -47,7 +45,7 @@ msp.run_biological(params)
 
 ## Versioning
 
-v0.8 includes Biological Suitability Tool
+v0.8.1 includes Biological Suitability Tool
 
 ## License
 
