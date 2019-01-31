@@ -1,7 +1,8 @@
 CONFIG = {
+    "version": "0.8.2",
     "log": {
-        "filepath": "/var/www/apisctools/log/msp.tools.log",
-        #Local "filepath": "msp.tools.log",
+        # "filepath": "/var/www/apisctools/log/msp.tools.log",
+        "filepath": "msp.tools.log",
         "level": "DEBUG"
     },
     "copernicus": {

@@ -1,5 +1,5 @@
 from setuptools import setup, find_namespace_packages
-
+from msptools.config import CONFIG
 
 def readme():
     with open('README.md') as f:
@@ -7,7 +7,7 @@ def readme():
 
 
 setup(name='msptools',
-      version='0.8',
+      version=CONFIG["version"],
       description='Marine Spatial Planning: Aquaculture',
       url='https://github.com/ihcantabria/msptools',
       author='Felipe Maza',

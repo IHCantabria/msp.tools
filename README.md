@@ -43,10 +43,6 @@ params = {
 msp.run_biological(params)
 ```
 
-## Versioning
-
-v0.8.1 includes Biological Suitability Tool
-
 ## License
 
 license:gpl GNU General Public License v3.0
