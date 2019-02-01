@@ -1,5 +1,5 @@
 CONFIG = {
-    "version": "0.8.2",
+    "version": "0.8.3",
     "log": {
         # "filepath": "/var/www/apisctools/log/msp.tools.log",
         "filepath": "msp.tools.log",
