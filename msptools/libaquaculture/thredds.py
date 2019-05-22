@@ -45,10 +45,6 @@ class Thredds(object):
             ))
             data = ncss.get_data(query)
 
-            if ncss.metadata.variables[variables[0]]['attributes']['missing_value'] == data.variables.get('missing_value'):
-                raise LandException("This point is located on land: lon: {lon}, lat: {lat}".format(
-                    lon=point["lon"], lat=point["lat"]))
-
             scale_factor = {}
             offset = {}
             for variable_name in variables:
@@ -59,13 +55,15 @@ class Thredds(object):
             for i in range(data.variables.get('time').size):
                 dictionary_date_variables = {}
                 for variable_name in variables:
+                    value = float(np.ma.getdata(data[variable_name][0][i], subok=True))
+                    if float(ncss.metadata.variables[variables[0]]['attributes']['missing_value'][0]) == value:
+                        raise LandException("This point is located on land: lon: {lon}, lat: {lat}".format(lon=point["lon"], lat=point["lat"]))
                     dictionary_date_variables[variable_name] = self.get_real_value(
-                       float(np.ma.getdata(data[variable_name][0][i], subok=True)) , scale_factor[variable_name], offset[variable_name])
+                       value , scale_factor[variable_name], offset[variable_name])
 
-                #values[data['date'][i]] = dictionary_date_variables
                 date = num2date(data.variables['time'][0][i], data.variables['time'].units, data.variables['time'].calendar)
                 if date.tzinfo is None:
-                        date = date.replace(tzinfo=pytz.utc)
+                    date = date.replace(tzinfo=pytz.utc)
                 values[date] = dictionary_date_variables
         except LandException as ex:
             self.logger.warn("This point is located on land: lon: {lon}, lat: {lat}".format(
