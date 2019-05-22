@@ -4,7 +4,7 @@ import argparse
 from datetime import datetime
 
 # Our libs:
-import msptools
+from msptools import aquaculture
 
 
 # Classes:
@@ -34,13 +34,13 @@ class TestFunctions(unittest.TestCase):
         pass
 
     def test_complete_run(self):
-        self.assertAlmostEqual( msptools.aquaculture.run_biological(self.params),0.26, delta=0.01)
+        self.assertAlmostEqual( aquaculture.run_biological(self.params),0.26, delta=0.01)
 
     def test_throws_landException(self):
         self.params["point"]["lon"] = -2.445556
         self.params["point"]["lat"] = 42.47
         #with self.assertRaises(Exception): aquaculture.run_biological(self.params)
-        with self.assertRaises(msptools.aquaculture.core.LandException): msptools.aquaculture.run_biological(self.params)
+        with self.assertRaises(aquaculture.core.LandException): aquaculture.run_biological(self.params)
    
 if __name__ == '__main__':
     unittest.main()
