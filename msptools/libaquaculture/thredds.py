@@ -2,11 +2,16 @@
 from datetime import datetime
 import logging
 # Third parties
+import pytz
+import numpy as np
 from siphon.catalog import TDSCatalog
 
 from msptools.libaquaculture.core import LandException
+from netCDF4 import num2date
 
 # Classes:
+
+
 class Thredds(object):
     """Class to manage access to a netCDF file in 'IHData'."""
 
@@ -26,8 +31,12 @@ class Thredds(object):
             ncss = best_dataset.subset()
             query = ncss.query()
 
-            query.lonlat_point(point['lon'], point['lat']).time_range(dates['start'], dates['end'])
+            query.lonlat_point(point['lon'], point['lat']).time_range(
+                dates['start'], dates['end'])
             query.variables(",".join(variables))
+            # Set extra params for performance #
+            #query.vertical_level(0.49402499198913574)
+            query.accept("netcdf")
 
             self.logger.debug("thredds query lon: {lon}, lat: {lat}, start: {start}, end: {end}, vars: {vars}".format(
                 lon=point["lon"], lat=point["lat"],
@@ -36,8 +45,9 @@ class Thredds(object):
             ))
             data = ncss.get_data(query)
 
-            if ncss.metadata.variables[variables[0]]['attributes']['missing_value'] == data[variables[0]][0]:
-                raise LandException("This point is located on land: lon: {lon}, lat: {lat}".format(lon=point["lon"], lat=point["lat"]))
+            if ncss.metadata.variables[variables[0]]['attributes']['missing_value'] == data.variables.get('missing_value'):
+                raise LandException("This point is located on land: lon: {lon}, lat: {lat}".format(
+                    lon=point["lon"], lat=point["lat"]))
 
             scale_factor = {}
             offset = {}
@@ -45,16 +55,21 @@ class Thredds(object):
                 scale_factor[variable_name] = ncss.metadata.variables[variable_name]['attributes']['scale_factor'][0]
                 offset[variable_name] = ncss.metadata.variables[variable_name]['attributes']['add_offset'][0]
 
-            
             values = {}
-            for i in range(len(data['date'])):
+            for i in range(data.variables.get('time').size):
                 dictionary_date_variables = {}
                 for variable_name in variables:
-                    dictionary_date_variables[variable_name] = self.get_real_value(data[variable_name][i], scale_factor[variable_name], offset[variable_name])
+                    dictionary_date_variables[variable_name] = self.get_real_value(
+                       float(np.ma.getdata(data[variable_name][0][i], subok=True)) , scale_factor[variable_name], offset[variable_name])
 
-                values[data['date'][i]] = dictionary_date_variables
+                #values[data['date'][i]] = dictionary_date_variables
+                date = num2date(data.variables['time'][0][i], data.variables['time'].units, data.variables['time'].calendar)
+                if date.tzinfo is None:
+                        date = date.replace(tzinfo=pytz.utc)
+                values[date] = dictionary_date_variables
         except LandException as ex:
-            self.logger.warn("This point is located on land: lon: {lon}, lat: {lat}".format(lon=point["lon"], lat=point["lat"]))
+            self.logger.warn("This point is located on land: lon: {lon}, lat: {lat}".format(
+                lon=point["lon"], lat=point["lat"]))
             raise
         except Exception as err:
             self.logger.error("Fatal error in thredds.", exc_info=True)

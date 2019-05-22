@@ -58,7 +58,7 @@ class Test_Data(unittest.TestCase):
             self.assertIsInstance(measured_variable['values'], list)
 
     def test_values_on_day(self):
-        timestamp = 1420200000.0  # 2/1/2015
+        timestamp = 1420200000.0  # 2/1/2015 12:00:00
         expected_temperature = 18.6481216738  # temp on 2/1/2015
         expected_salinity = 36.597797192  # salinity on 2/1/2015
         data = aquaculture.load_historical_serie(self.params)
