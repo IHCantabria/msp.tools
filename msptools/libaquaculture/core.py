@@ -86,7 +86,8 @@ def sanitize_args(opts):
 
     if opts.temperature_min is None or opts.temperature_max is None or opts.salinity_min is None \
             or opts.salinity_max is None or opts.name is None:
-        raise ValueError("It is required to provide all suitable ranges of variables for the growth of the specie.")
+        raise ValueError(
+            "It is required to provide all suitable ranges of variables for the growth of the specie.")
 
     # Check if period is correctly given:
     try:
@@ -136,14 +137,19 @@ def sanitize_input_web(params):
     try:
         if params["specie"]["temperature_min"] is None or params["specie"]["temperature_max"] is None or params["specie"]["salinity_min"] is None \
                 or params["specie"]["salinity_max"] is None or params["specie"]["name"] is None:
-            raise ValueError("It is required to provide all suitable ranges of variables for the growth of the species.")
+            raise ValueError(
+                "It is required to provide all suitable ranges of variables for the growth of the species.")
     except KeyError:
-        raise ValueError("It is required to provide all suitable ranges of variables for the growth of the species.")
+        raise ValueError(
+            "It is required to provide all suitable ranges of variables for the growth of the species.")
     # Check if period is correctly given:
     try:
-        params["dates"]["start"] = datetime.strptime(params["dates"]["ini"], "%Y-%m-%d")
-        params["dates"]["end"] = datetime.strptime(params["dates"]["end"], "%Y-%m-%d")
-        params["dates"]["end"] = params["dates"]["end"].replace(hour=23, minute=59, second=59)
+        params["dates"]["start"] = datetime.strptime(
+            params["dates"]["ini"], "%Y-%m-%d")
+        params["dates"]["end"] = datetime.strptime(
+            params["dates"]["end"], "%Y-%m-%d")
+        params["dates"]["end"] = params["dates"]["end"].replace(
+            hour=23, minute=59, second=59)
     except KeyError:
         raise ValueError(
             "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
@@ -167,5 +173,3 @@ def build_species_conf(opts):
         "salinity_min": opts.salinity_min,
         "salinity_max": opts.salinity_max,
     }
-class LandException(Exception):
-    pass

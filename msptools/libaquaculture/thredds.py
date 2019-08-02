@@ -6,7 +6,7 @@ import pytz
 import numpy as np
 from siphon.catalog import TDSCatalog
 
-from msptools.libaquaculture.core import LandException
+from msptools.utils import LandException
 from netCDF4 import num2date
 
 # Classes:
@@ -35,7 +35,7 @@ class Thredds(object):
                 dates['start'], dates['end'])
             query.variables(",".join(variables))
             # Set extra params for performance #
-            #query.vertical_level(0.49402499198913574)
+            # query.vertical_level(0.49402499198913574)
             query.accept("netcdf")
 
             self.logger.debug("thredds query lon: {lon}, lat: {lat}, start: {start}, end: {end}, vars: {vars}".format(
@@ -55,13 +55,16 @@ class Thredds(object):
             for i in range(data.variables.get('time').size):
                 dictionary_date_variables = {}
                 for variable_name in variables:
-                    value = float(np.ma.getdata(data[variable_name][0][i], subok=True))
+                    value = float(np.ma.getdata(
+                        data[variable_name][0][i], subok=True))
                     if float(ncss.metadata.variables[variables[0]]['attributes']['missing_value'][0]) == value:
-                        raise LandException("This point is located on land: lon: {lon}, lat: {lat}".format(lon=point["lon"], lat=point["lat"]))
+                        raise LandException("This point is located on land: lon: {lon}, lat: {lat}".format(
+                            lon=point["lon"], lat=point["lat"]))
                     dictionary_date_variables[variable_name] = self.get_real_value(
-                       value , scale_factor[variable_name], offset[variable_name])
+                        value, scale_factor[variable_name], offset[variable_name])
 
-                date = num2date(data.variables['time'][0][i], data.variables['time'].units, data.variables['time'].calendar)
+                date = num2date(
+                    data.variables['time'][0][i], data.variables['time'].units, data.variables['time'].calendar)
                 if date.tzinfo is None:
                     date = date.replace(tzinfo=pytz.utc)
                 values[date] = dictionary_date_variables

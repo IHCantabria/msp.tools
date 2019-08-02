@@ -5,6 +5,7 @@ from datetime import datetime
 
 # Our libs:
 from msptools import aquaculture
+from msptools import utils
 
 
 # Classes:
@@ -13,8 +14,8 @@ class TestFunctions(unittest.TestCase):
 
     def setUp(self):
         self.params = {
-            "point": { 
-                "lon": -13.016, 
+            "point": {
+                "lon": -13.016,
                 "lat": 28.486
             },
             "specie": {
@@ -34,13 +35,16 @@ class TestFunctions(unittest.TestCase):
         pass
 
     def test_complete_run(self):
-        self.assertAlmostEqual( aquaculture.run_biological(self.params),0.26, delta=0.01)
+        self.assertAlmostEqual(aquaculture.run_biological(
+            self.params), 0.26, delta=0.01)
 
     def test_throws_landException(self):
         self.params["point"]["lon"] = -2.445556
         self.params["point"]["lat"] = 42.47
         #with self.assertRaises(Exception): aquaculture.run_biological(self.params)
-        with self.assertRaises(aquaculture.core.LandException): aquaculture.run_biological(self.params)
-   
+        with self.assertRaises(utils.LandException):
+            aquaculture.run_biological(self.params)
+
+
 if __name__ == '__main__':
     unittest.main()

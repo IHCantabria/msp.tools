@@ -7,12 +7,13 @@
 The IH-MSP Platform (Marine Spatial Planning http://msp.ihcantabria.com/) integrates technical and scientific knowledge from IHCantabria, as well as the present set of "Screening Tools" in relation with marine activities suitability, aquaculture and marine energy, and their planning in marine area.
 
 It is organized in four main tools:
-    - Biological and Energy resouce suitability
-    - Structural suitability
-    - Operational suitability (for carry out operation and maintenance activities)
+    - Biological and Energy Resouce Suitability
+    - Structural Suitability
+    - Operational Suitability (for carry out operation and maintenance activities)
     - Fish Farming & Renewable Energy Opportunities
 
-The current version only implements "Biological Suitability Tool". The aim of the Biological Suitability tool is to assess the growth probability of species according to their biological charecteristics, in this case, according to their suitable temperature and salinity ranges. It makes use of Copernicus Marine Environment Monitoring Service product, specifically analyzes Global Ocean Physics Reanalysis (GLOBAL_REANALYSIS_PHY_001_030), so the CMEMS product, http://marine.copernicus.eu/, is a key element of this tool.
+So far, the current version implements "Biological and EnergyResource Suitability Tool". The aim of the Biological Suitability tool is to assess the growth probability of species according to their biological charecteristics, in this case, according to their suitable temperature and salinity ranges. It makes use of Copernicus Marine Environment Monitoring Service product, specifically analyzes Global Ocean Physics Reanalysis (GLOBAL_REANALYSIS_PHY_001_030), so the CMEMS product, http://marine.copernicus.eu/, is a key element of this tool.
+The goal of Energy Resource Suitability tool is to assess the oceanographic conditions to obtain wave and wind energy. It makes use of ERA-Interim, a global atmospheric reanalysis product of European Centre for Medium-Range Weather Forecasts (ECMWF), https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era-interim.
 
 ### Prerequisites
 
