@@ -1,5 +1,5 @@
 from datetime import datetime
-import logging 
+import logging
 import sys
 import msptools.config
 from msptools.config import CONFIG
@@ -17,6 +17,7 @@ file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
 
+
 def run_from_cli():
     logger.debug("Starting from CLI")
     ranges, point, dates = core.parse_args(sys.argv[1:])
@@ -26,20 +27,21 @@ def run_from_cli():
 
 def run_suitability(params):
     logger.debug(params['point'])
-    points, dates, config = core.parse_input_web(params)
+    points, dates, config = core.parse_input_web_wind(params)
     return get_suitability(points, dates, config)
-    
+
 
 def get_suitability(point, dates, ranges):
     values_from_global_atmospheric_reanalysis = ecmwf.get_data_from_era_interim(
         point, dates, CONFIG["ECMWF"]["wind"]["variables"])
-    
+
     resource = windresource.windresource(ranges)
-    
+
     suitability = resource.calculate_suitability(
         values_from_global_atmospheric_reanalysis)
-    
+
     return suitability
+
 
 # Main body:
 if __name__ == '__main__':

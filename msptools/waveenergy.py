@@ -25,7 +25,7 @@ def run_from_cli():
 
 
 def run_suitability(params):
-    point, dates, config = core.parse_input_web(params)
+    point, dates, config = core.parse_input_web_wave(params)
     return get_waveresource_suitability(config, point, dates)
 
 

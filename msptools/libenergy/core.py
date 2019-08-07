@@ -79,11 +79,34 @@ def sanitize_args(opts):
     return opts
 
 
-def parse_input_web(params):
+def parse_input_web_wave(params):
+    """Date is converted, the rest of parameters have correct format
+    {
+        'config': {
+                'hs_min': 1,
+                'hs_max': 5,
+                'tp_min': 5,
+                'tp_max': 14,
+                'cge_min': 15,
+            },
+            'point': {'lon': -13.016, 'lat': 28.486},
+            'dates': {
+                'start': '2015-01-01',
+                'end': '2015-03-01',
+            }
+    }
+    """
+    input_data = sanitize_wave_params(params)
+
+    return input_data["point"], input_data["dates"], input_data["config"]
+
+
+def parse_input_web_wind(params):
     """Date is converted, the rest of parameters have correct format
     {
         'config': {
             'hs_max': 5,
+            'pow':400
         },
         'point': {'lon': -13.016, 'lat': 28.486},
         'dates': {
@@ -92,24 +115,64 @@ def parse_input_web(params):
         }
     }
     """
-    input_data = sanitize_input_web(params)
+    input_data = sanitize_wind_params(params)
 
     return input_data["point"], input_data["dates"], input_data["config"]
 
 
-def sanitize_input_web(params):
+def sanitize_wind_params(params):
     # Check coordinates:
     try:
         if params["point"]["lon"] is None or params["point"]["lat"] is None:
             raise ValueError("Both latitude and longitude must be provided.")
     except KeyError:
         raise ValueError("Both latitude and longitude must be provided.")
-    # Check if identifier is given:
+    # Check thresholds:
+    try:
+        if params["config"]["hs_max"] is None or params["config"]["pow"] is None:
+            raise ValueError(
+                "It is required to provide all suitable ranges of variables for resource.")
+    except KeyError:
+        raise ValueError(
+            "It is required to provide all suitable ranges of variables for resource.")
+    # Check if period is correctly given:
+    try:
+        params["dates"]["start"] = datetime.strptime(
+            params["dates"]["start"], "%Y-%m-%d")
+        params["dates"]["end"] = datetime.strptime(
+            params["dates"]["end"], "%Y-%m-%d")
+        params["dates"]["end"] = params["dates"]["end"].replace(
+            hour=23, minute=59, second=59)
+    except KeyError:
+        raise ValueError(
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+    except ValueError:
+        raise ValueError(
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+    except TypeError:
+        raise TypeError("Remember both start and end date must be given.")
+
+    return params
+
+
+def sanitize_wave_params(params):
+    # Check coordinates:
+    try:
+        if params["point"]["lon"] is None or params["point"]["lat"] is None:
+            raise ValueError("Both latitude and longitude must be provided.")
+    except KeyError:
+        raise ValueError("Both latitude and longitude must be provided.")
 
     try:
         if params["config"]["hs_min"] is None or params["config"]["hs_max"] is None:
             raise ValueError(
-                "It is required to provide all suitable ranges of variables for resource.")
+                "It is required to provide wave height suitable ranges for resource.")
+        if params["config"]["tp_min"] is None or params["config"]["tp_max"] is None:
+            raise ValueError(
+                "It is required to provide suitables peak period ranges for resource.")
+        if params["config"]["cge_min"] is None:
+            raise ValueError(
+                "It is required to provide available Energy Flux")
     except KeyError:
         raise ValueError(
             "It is required to provide all suitable ranges of variables for resource.")
