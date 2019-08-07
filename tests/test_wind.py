@@ -11,8 +11,8 @@ class Test_Wind(unittest.TestCase):
     def setUp(self):
         self.params = {
             'config': {
-                'hs_min': 0,
                 'hs_max': 5,
+                'pow': 400
             },
             'point': {'lon': -13.016, 'lat': 28.486},
             'dates': {
@@ -29,8 +29,8 @@ class Test_Wind(unittest.TestCase):
     def test_get_result(self):
         params = {
             'config': {
-                'hs_min': 0,
                 'hs_max': 5,
+                'pow': 400
             },
             'point': {'lon': -7.229, 'lat': 48.75895},
             'dates': {
@@ -45,8 +45,8 @@ class Test_Wind(unittest.TestCase):
     def test_get_result_alt(self):
         params = {
             'config': {
-                'hs_min': 0,
                 'hs_max': 5,
+                'pow': 400
             },
             'point': {'lon': -2.37305, 'lat': 47.06264},
             'dates': {
