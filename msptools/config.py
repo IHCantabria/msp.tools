@@ -21,7 +21,8 @@ CONFIG = {
     },
     "ECMWF": {
         "ERA_Interim": {
-            "catalog": "http://thredds.ihcantabria.com/catalog/era_interim/catalog.xml"
+            "catalog": "http://thredds.ihcantabria.com/catalog/era_interim/catalog.xml",
+            "id": 20,
         },
         "wave": {
             "variables": [
