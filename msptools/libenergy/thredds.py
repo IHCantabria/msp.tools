@@ -94,7 +94,7 @@ class Thredds(object):
                     date = date.replace(tzinfo=pytz.utc)
                 values[date] = dictionary_date_variables
         except LandException as ex:
-            self.logger.warn(
+            self.logger.warning(
                 "This point is located on land: lon: {lon}, lat: {lat}".format(
                     lon=point["lon"], lat=point["lat"]
                 )
