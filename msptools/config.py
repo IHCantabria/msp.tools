@@ -5,9 +5,13 @@ CONFIG = {
         "filepath": "msp.tools.log",
         "level": "DEBUG",
     },
+    "datahub": {
+        "urls": {"product": "https://datahub.ihcantabria.com/v1/public/Products/{id}"}
+    },
     "copernicus": {
         "global_reanalysis_physical": {
-            "catalog": "http://thredds.ihcantabria.com/catalog/copernicus/CMEMS/catalog.xml"
+            "catalog": "http://thredds.ihcantabria.com/catalog/copernicus/CMEMS/catalog.xml",
+            "id": 7,
         },
         "variables": [
             {"name": "thetao", "alias": "temperature", "units": "°"},

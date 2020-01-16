@@ -1,5 +1,21 @@
+import json
+import requests
 from msptools.libaquaculture.thredds import Thredds
 from msptools.config import CONFIG
+
+
+def get_url_catalog():
+    id_catalog = CONFIG["copernicus"]["global_reanalysis_physical"]["id"]
+    url_datahub = CONFIG["datahub"]["urls"]["product"].format(id=id_catalog)
+    response = requests.get(url_datahub)
+    if response.ok:
+        data = json.loads(response.content)
+    else:
+        raise response.raise_for_status()
+    url_catalog = "{urlBase}{urlXmlLatest}".format(
+        urlBase=data[0]["urlBase"], urlXmlLatest=data[0]["urlXmlLatest"]
+    )
+    return url_catalog
 
 
 def get_temperature_and_salinity_from_global_reanalysis_physical(point, dates):
@@ -11,7 +27,7 @@ def get_temperature_and_salinity_from_global_reanalysis_physical(point, dates):
     for variable in CONFIG["copernicus"]["variables"]:
         var_names.append(variable.get("name"))
 
-    url_catalog = CONFIG["copernicus"]["global_reanalysis_physical"]["catalog"]
+    url_catalog = get_url_catalog()
 
     thredds = Thredds(url_catalog)
     data_from_thredds = thredds.get_data_in_point_between_dates(point, dates, var_names)
