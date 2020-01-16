@@ -3,28 +3,17 @@ CONFIG = {
     "log": {
         # "filepath": "/var/www/apisctools/log/msp.tools.log",
         "filepath": "msp.tools.log",
-        "level": "DEBUG"
+        "level": "DEBUG",
     },
     "copernicus": {
         "global_reanalysis_physical": {
             "catalog": "http://thredds.ihcantabria.com/catalog/copernicus/CMEMS/catalog.xml"
         },
         "variables": [
-            {
-                "name": "thetao",
-                "alias": "temperature",
-                "units": "°"
-            },
-            {
-                "name": "so",
-                "alias": "salinity",
-                "units": "psu"
-            }
+            {"name": "thetao", "alias": "temperature", "units": "°"},
+            {"name": "so", "alias": "salinity", "units": "psu"},
         ],
-        "source": {
-            "name": "CMEMS",
-            "link": "http://marine.copernicus.eu/"
-        }
+        "source": {"name": "CMEMS", "link": "http://marine.copernicus.eu/"},
     },
     "ECMWF": {
         "ERA_Interim": {
@@ -32,46 +21,21 @@ CONFIG = {
         },
         "wave": {
             "variables": [
-                {
-                    "name": "swh",
-                    "alias": "hs",
-                    "units": "m"
-                },
-                {
-                    "name": "pp1d",
-                    "alias": "tp",
-                    "units": "s"
-                },
-                {
-                    "name": "mwp",
-                    "alias": "tm",
-                    "units": "s"
-                },
+                {"name": "swh", "alias": "hs", "units": "m"},
+                {"name": "pp1d", "alias": "tp", "units": "s"},
+                {"name": "mwp", "alias": "tm", "units": "s"},
             ],
         },
         "wind": {
             "variables": [
-                {
-                    "name": "swh",
-                    "alias": "hs",
-                    "units": "m"
-                },
-                {
-                    "name": "u10",
-                    "alias": "u10",
-                    "units": "m/s"
-                },
-                {
-                    "name": "v10",
-                    "alias": "v10",
-                    "units": "m/s"
-                },
+                {"name": "swh", "alias": "hs", "units": "m"},
+                {"name": "u10", "alias": "u10", "units": "m/s"},
+                {"name": "v10", "alias": "v10", "units": "m/s"},
             ],
         },
         "source": {
             "name": "ERA_Interim",
-            "link": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era-interim"
-        }
+            "link": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era-interim",
+        },
     },
-
 }

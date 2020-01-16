@@ -1,5 +1,6 @@
 import logging
 import math
+
 # Classes:
 
 
@@ -23,15 +24,14 @@ class windresource(object):
         hs_ok = potential_ok = 0
         dates = sorted(data_serie.keys())
         for day in dates:
-            self.hs = data_serie[day]['hs']
+            self.hs = data_serie[day]["hs"]
 
-            speed = self.get_speed(
-                data_serie[day]['u10'], data_serie[day]['v10'])
+            speed = self.get_speed(data_serie[day]["u10"], data_serie[day]["v10"])
             area_rotor = 1
             potential = self.get_potential(speed, area_rotor)
             if potential >= self.pow:
                 potential_ok += 1
-            if self.is_value_lower(data_serie[day]['hs'], self.hs_max):
+            if self.is_value_lower(data_serie[day]["hs"], self.hs_max):
                 hs_ok += 1
 
         total = len(data_serie)
@@ -47,6 +47,7 @@ class windresource(object):
 
     def get_speed(self, u, v):
         return math.sqrt(math.pow(u, 2) + math.pow(v, 2))
+
     # Public properties:
 
     def get_potential(self, speed, area_rotor):

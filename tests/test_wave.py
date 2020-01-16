@@ -10,18 +10,15 @@ from msptools.config import CONFIG
 class Test_Wave(unittest.TestCase):
     def setUp(self):
         self.params = {
-            'config': {
-                'hs_min': 1,
-                'hs_max': 5,
-                'tp_min': 5,
-                'tp_max': 14,
-                'cge_min': 15,
+            "config": {
+                "hs_min": 1,
+                "hs_max": 5,
+                "tp_min": 5,
+                "tp_max": 14,
+                "cge_min": 15,
             },
-            'point': {'lon': -13.016, 'lat': 28.486},
-            'dates': {
-                'start': '2015-01-01',
-                'end': '2015-03-01',
-            }
+            "point": {"lon": -13.016, "lat": 28.486},
+            "dates": {"start": "2015-01-01", "end": "2015-03-01",},
         }
 
     def test_get_suitability(self):
@@ -36,5 +33,5 @@ class Test_Wave(unittest.TestCase):
             waveenergy.run_suitability(self.params)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

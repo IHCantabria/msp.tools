@@ -14,14 +14,12 @@ def get_temperature_and_salinity_from_global_reanalysis_physical(point, dates):
     url_catalog = CONFIG["copernicus"]["global_reanalysis_physical"]["catalog"]
 
     thredds = Thredds(url_catalog)
-    data_from_thredds = thredds.get_data_in_point_between_dates(
-        point, dates, var_names)
+    data_from_thredds = thredds.get_data_in_point_between_dates(point, dates, var_names)
 
     indexes = list(data_from_thredds.keys())
     output_data = {}
     for index in indexes:
-        output_data = set_output_data(
-            index, data_from_thredds[index], output_data)
+        output_data = set_output_data(index, data_from_thredds[index], output_data)
 
     return output_data
 

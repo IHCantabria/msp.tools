@@ -10,15 +10,9 @@ from msptools.config import CONFIG
 class Test_Wind(unittest.TestCase):
     def setUp(self):
         self.params = {
-            'config': {
-                'hs_max': 5,
-                'pow': 400
-            },
-            'point': {'lon': -13.016, 'lat': 28.486},
-            'dates': {
-                'start': '2015-01-01',
-                'end': '2015-03-01',
-            }
+            "config": {"hs_max": 5, "pow": 400},
+            "point": {"lon": -13.016, "lat": 28.486},
+            "dates": {"start": "2015-01-01", "end": "2015-03-01",},
         }
 
     def test_get_result(self):
@@ -28,15 +22,9 @@ class Test_Wind(unittest.TestCase):
 
     def test_get_result(self):
         params = {
-            'config': {
-                'hs_max': 5,
-                'pow': 400
-            },
-            'point': {'lon': -7.229, 'lat': 48.75895},
-            'dates': {
-                'start': '2010-02-01',
-                'end': '2010-02-05',
-            }
+            "config": {"hs_max": 5, "pow": 400},
+            "point": {"lon": -7.229, "lat": 48.75895},
+            "dates": {"start": "2010-02-01", "end": "2010-02-05",},
         }
         result = windenergy.run_suitability(params)
         self.assertIsNotNone(result)
@@ -44,15 +32,9 @@ class Test_Wind(unittest.TestCase):
 
     def test_get_result_alt(self):
         params = {
-            'config': {
-                'hs_max': 5,
-                'pow': 400
-            },
-            'point': {'lon': -2.37305, 'lat': 47.06264},
-            'dates': {
-                'start': '2010-02-01',
-                'end': '2010-02-05',
-            }
+            "config": {"hs_max": 5, "pow": 400},
+            "point": {"lon": -2.37305, "lat": 47.06264},
+            "dates": {"start": "2010-02-01", "end": "2010-02-05",},
         }
         result = windenergy.run_suitability(params)
         self.assertIsNotNone(result)
@@ -65,5 +47,5 @@ class Test_Wind(unittest.TestCase):
             windenergy.run_suitability(self.params)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

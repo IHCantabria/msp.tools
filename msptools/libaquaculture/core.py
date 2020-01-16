@@ -10,50 +10,70 @@ def parse_args(args):
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-x", "--longitude",
-                        help="Longitude of point. Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "-x",
+        "--longitude",
+        help="Longitude of point. Default: None.",
+        type=float,
+        default=None,
+    )
 
-    parser.add_argument("-y", "--latitude",
-                        help="Latitude of point. Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "-y",
+        "--latitude",
+        help="Latitude of point. Default: None.",
+        type=float,
+        default=None,
+    )
 
-    parser.add_argument("--start",
-                        help="Starting date of period to consider (in YYYY-MM-DD format). Default: None.",
-                        type=str,
-                        default=None)
+    parser.add_argument(
+        "--start",
+        help="Starting date of period to consider (in YYYY-MM-DD format). Default: None.",
+        type=str,
+        default=None,
+    )
 
-    parser.add_argument("--end",
-                        help="Ending date of period to consider (in YYYY-MM-DD format). Default: None.",
-                        type=str,
-                        default=None)
+    parser.add_argument(
+        "--end",
+        help="Ending date of period to consider (in YYYY-MM-DD format). Default: None.",
+        type=str,
+        default=None,
+    )
 
-    parser.add_argument("--name",
-                        help="Name of biological species (if ID not used). Default: None.",
-                        type=str,
-                        default=None)
+    parser.add_argument(
+        "--name",
+        help="Name of biological species (if ID not used). Default: None.",
+        type=str,
+        default=None,
+    )
 
-    parser.add_argument("--temperature-min",
-                        help="The minimum threshold temperature for the biological specie growth (if ID not used). Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "--temperature-min",
+        help="The minimum threshold temperature for the biological specie growth (if ID not used). Default: None.",
+        type=float,
+        default=None,
+    )
 
-    parser.add_argument("--temperature-max",
-                        help="The maximum threshold temperature for the biological specie growth (if ID not used). Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "--temperature-max",
+        help="The maximum threshold temperature for the biological specie growth (if ID not used). Default: None.",
+        type=float,
+        default=None,
+    )
 
-    parser.add_argument("--salinity-min",
-                        help="The minimum threshold salinity for the biological specie growth (if ID not used). Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "--salinity-min",
+        help="The minimum threshold salinity for the biological specie growth (if ID not used). Default: None.",
+        type=float,
+        default=None,
+    )
 
-    parser.add_argument("--salinity-max",
-                        help="The maximum threshold salinity for the biological specie growth (if ID not used). Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "--salinity-max",
+        help="The maximum threshold salinity for the biological specie growth (if ID not used). Default: None.",
+        type=float,
+        default=None,
+    )
     opts = sanitize_args(parser.parse_args(args))
 
     specie = {
@@ -61,16 +81,10 @@ def parse_args(args):
         "salinity_min": opts.salinity_min,
         "salinity_max": opts.salinity_max,
         "temperature_min": opts.temperature_min,
-        "temperature_max": opts.temperature_max
+        "temperature_max": opts.temperature_max,
     }
-    point = {
-        "lon": opts.longitude,
-        "lat": opts.latitude
-    }
-    dates = {
-        "start": opts.start,
-        "end": opts.end
-    }
+    point = {"lon": opts.longitude, "lat": opts.latitude}
+    dates = {"start": opts.start, "end": opts.end}
     return specie, point, dates
 
 
@@ -79,15 +93,20 @@ def sanitize_args(opts):
 
     # Check coordinates:
     if opts.longitude is None or opts.latitude is None:
-        raise ValueError(
-            "Both latitude and longitude must be provided.")
+        raise ValueError("Both latitude and longitude must be provided.")
 
     # Check if identifier is given:
 
-    if opts.temperature_min is None or opts.temperature_max is None or opts.salinity_min is None \
-            or opts.salinity_max is None or opts.name is None:
+    if (
+        opts.temperature_min is None
+        or opts.temperature_max is None
+        or opts.salinity_min is None
+        or opts.salinity_max is None
+        or opts.name is None
+    ):
         raise ValueError(
-            "It is required to provide all suitable ranges of variables for the growth of the specie.")
+            "It is required to provide all suitable ranges of variables for the growth of the specie."
+        )
 
     # Check if period is correctly given:
     try:
@@ -96,7 +115,8 @@ def sanitize_args(opts):
         opts.end = opts.end.replace(hour=23, minute=59, second=59)
     except ValueError:
         raise ValueError(
-            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format."
+        )
     except TypeError:
         raise TypeError("Remember both start and end date must be given.")
 
@@ -135,27 +155,35 @@ def sanitize_input_web(params):
     # Check if identifier is given:
 
     try:
-        if params["specie"]["temperature_min"] is None or params["specie"]["temperature_max"] is None or params["specie"]["salinity_min"] is None \
-                or params["specie"]["salinity_max"] is None or params["specie"]["name"] is None:
+        if (
+            params["specie"]["temperature_min"] is None
+            or params["specie"]["temperature_max"] is None
+            or params["specie"]["salinity_min"] is None
+            or params["specie"]["salinity_max"] is None
+            or params["specie"]["name"] is None
+        ):
             raise ValueError(
-                "It is required to provide all suitable ranges of variables for the growth of the species.")
+                "It is required to provide all suitable ranges of variables for the growth of the species."
+            )
     except KeyError:
         raise ValueError(
-            "It is required to provide all suitable ranges of variables for the growth of the species.")
+            "It is required to provide all suitable ranges of variables for the growth of the species."
+        )
     # Check if period is correctly given:
     try:
-        params["dates"]["start"] = datetime.strptime(
-            params["dates"]["ini"], "%Y-%m-%d")
-        params["dates"]["end"] = datetime.strptime(
-            params["dates"]["end"], "%Y-%m-%d")
+        params["dates"]["start"] = datetime.strptime(params["dates"]["ini"], "%Y-%m-%d")
+        params["dates"]["end"] = datetime.strptime(params["dates"]["end"], "%Y-%m-%d")
         params["dates"]["end"] = params["dates"]["end"].replace(
-            hour=23, minute=59, second=59)
+            hour=23, minute=59, second=59
+        )
     except KeyError:
         raise ValueError(
-            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format."
+        )
     except ValueError:
         raise ValueError(
-            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format."
+        )
     except TypeError:
         raise TypeError("Remember both start and end date must be given.")
 

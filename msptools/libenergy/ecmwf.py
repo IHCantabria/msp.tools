@@ -14,14 +14,14 @@ def get_data_from_era_interim(point, dates, variables):
     url_catalog = CONFIG["ECMWF"]["ERA_Interim"]["catalog"]
 
     thredds = Thredds(url_catalog)
-    data_from_thredds = thredds.get_data_in_point_between_dates(
-        point, dates, var_names)
+    data_from_thredds = thredds.get_data_in_point_between_dates(point, dates, var_names)
 
     indexes = list(data_from_thredds.keys())
     output_data = {}
     for index in indexes:
         output_data = set_output_data(
-            index, data_from_thredds[index], variables, output_data)
+            index, data_from_thredds[index], variables, output_data
+        )
 
     return output_data
 

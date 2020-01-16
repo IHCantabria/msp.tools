@@ -14,37 +14,32 @@ class TestFunctions(unittest.TestCase):
 
     def setUp(self):
         self.params = {
-            "point": {
-                "lon": -13.016,
-                "lat": 28.486
-            },
+            "point": {"lon": -13.016, "lat": 28.486},
             "specie": {
-                "name": 'European seabass',
+                "name": "European seabass",
                 "salinity_min": 30,
                 "salinity_max": 40,
                 "temperature_min": 18,
-                "temperature_max": 26
+                "temperature_max": 26,
             },
-            "dates": {
-                "ini": '2015-01-01',
-                "end": '2015-03-01'
-            }
+            "dates": {"ini": "2015-01-01", "end": "2015-03-01"},
         }
 
     def tearDown(self):
         pass
 
     def test_complete_run(self):
-        self.assertAlmostEqual(aquaculture.run_biological(
-            self.params), 0.26, delta=0.01)
+        self.assertAlmostEqual(
+            aquaculture.run_biological(self.params), 0.26, delta=0.01
+        )
 
     def test_throws_landException(self):
         self.params["point"]["lon"] = -2.445556
         self.params["point"]["lat"] = 42.47
-        #with self.assertRaises(Exception): aquaculture.run_biological(self.params)
+        # with self.assertRaises(Exception): aquaculture.run_biological(self.params)
         with self.assertRaises(utils.LandException):
             aquaculture.run_biological(self.params)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -1,4 +1,5 @@
 import logging
+
 # Classes:
 class Species(object):
     """Description of a given biological species."""
@@ -7,7 +8,7 @@ class Species(object):
     def __init__(self, conf):
         self.logger = logging.getLogger("msp.aquaculture.biology")
         self.conf = conf
-        
+
     # Public methods:
     def is_salinity_ok(self, salinity):
         """Return True if salinity 'salinity' is adequate for us, False otherwise."""
@@ -26,8 +27,8 @@ class Species(object):
         n_ok = 0
         dates = sorted(data_serie.keys())
         for day in dates:
-            salinity = data_serie[day]['salinity']
-            temperature = data_serie[day]['temperature']
+            salinity = data_serie[day]["salinity"]
+            temperature = data_serie[day]["temperature"]
             if self.is_salinity_ok(salinity) and self.is_temperature_ok(temperature):
                 n_ok += 1
         total = len(data_serie)

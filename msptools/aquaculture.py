@@ -2,18 +2,19 @@
 from datetime import datetime
 import logging
 import sys
+
 # Our libs:
 from msptools.libaquaculture import core
 from msptools.libaquaculture import biology
 from msptools.libaquaculture import copernicus
 from msptools.config import CONFIG
+
 # Globals:
 
 logger = logging.getLogger("msp.aquaculture")
 logger.setLevel(logging.getLevelName(CONFIG["log"]["level"]))
 
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler = logging.FileHandler(CONFIG["log"]["filepath"])
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
@@ -33,23 +34,21 @@ def load_historical_serie(params):
     logger.debug("Load ocean data from web")
     specie, point, dates = core.parse_input_web(params)
     data_serie = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
-        point, dates)
+        point, dates
+    )
     parsed_data_serie = standarize_data(data_serie)
     return parsed_data_serie
 
 
 def standarize_data(data_serie):
     """ Normalize data from thredds to a more usable format"""
-    standarized_data = {
-        "source": CONFIG["copernicus"]["source"],
-        "measures": []
-    }
+    standarized_data = {"source": CONFIG["copernicus"]["source"], "measures": []}
     for var in CONFIG["copernicus"]["variables"]:
         measure = {
             "var_name": var["name"],
             "var_alias": var["alias"],
             "units": var["units"],
-            "values": _get_values_for_variable(var["alias"], data_serie)
+            "values": _get_values_for_variable(var["alias"], data_serie),
         }
         standarized_data["measures"].append(measure)
     return standarized_data
@@ -69,12 +68,13 @@ def get_biological_probability(specie_config, point, dates):
     """
 
     values_from_global_reanalysis = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
-        point, dates)
+        point, dates
+    )
     specie = biology.Species(specie_config)
-    probability = specie.biological_suitability_index(
-        values_from_global_reanalysis)
+    probability = specie.biological_suitability_index(values_from_global_reanalysis)
 
     return probability
+
 
 # Functions:
 
@@ -86,5 +86,5 @@ def run_from_cli():
 
 
 # Main body:
-if __name__ == '__main__':
+if __name__ == "__main__":
     run_from_cli()

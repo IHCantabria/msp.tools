@@ -5,11 +5,11 @@ from msptools.config import CONFIG
 from msptools.libenergy import core
 from msptools.libenergy import ecmwf
 from msptools.libenergy import waveresource
+
 logger = logging.getLogger("msp.waveenergyresource")
 logger.setLevel(logging.getLevelName(CONFIG["log"]["level"]))
 
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler = logging.FileHandler(CONFIG["log"]["filepath"])
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
@@ -32,13 +32,15 @@ def run_suitability(params):
 def get_waveresource_suitability(wave_config, point, dates):
 
     values_from_global_atmospheric_reanalysis = ecmwf.get_data_from_era_interim(
-        point, dates, CONFIG["ECMWF"]["wave"]["variables"])
+        point, dates, CONFIG["ECMWF"]["wave"]["variables"]
+    )
     resource = waveresource.waveresource(wave_config)
     suitability = resource.calculate_suitability(
-        values_from_global_atmospheric_reanalysis)
+        values_from_global_atmospheric_reanalysis
+    )
     return suitability
 
 
 # Main body:
-if __name__ == '__main__':
+if __name__ == "__main__":
     run_from_cli()

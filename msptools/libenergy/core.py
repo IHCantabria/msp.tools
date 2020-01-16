@@ -10,44 +10,48 @@ def parse_args(args):
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-x", "--longitude",
-                        help="Longitude of point. Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "-x",
+        "--longitude",
+        help="Longitude of point. Default: None.",
+        type=float,
+        default=None,
+    )
 
-    parser.add_argument("-y", "--latitude",
-                        help="Latitude of point. Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "-y",
+        "--latitude",
+        help="Latitude of point. Default: None.",
+        type=float,
+        default=None,
+    )
 
-    parser.add_argument("--start",
-                        help="Starting date of period to consider (in YYYY-MM-DD format). Default: None.",
-                        type=str,
-                        default=None)
+    parser.add_argument(
+        "--start",
+        help="Starting date of period to consider (in YYYY-MM-DD format). Default: None.",
+        type=str,
+        default=None,
+    )
 
-    parser.add_argument("--end",
-                        help="Ending date of period to consider (in YYYY-MM-DD format). Default: None.",
-                        type=str,
-                        default=None)
+    parser.add_argument(
+        "--end",
+        help="Ending date of period to consider (in YYYY-MM-DD format). Default: None.",
+        type=str,
+        default=None,
+    )
 
-    parser.add_argument("--hs-max",
-                        help="The maximum threshold significant wave height for the wind resource. Default: None.",
-                        type=float,
-                        default=None)
+    parser.add_argument(
+        "--hs-max",
+        help="The maximum threshold significant wave height for the wind resource. Default: None.",
+        type=float,
+        default=None,
+    )
 
     opts = sanitize_args(parser.parse_args(args))
 
-    ranges = {
-        "hs_max": opts.hs_min
-    }
-    point = {
-        "lon": opts.longitude,
-        "lat": opts.latitude
-    }
-    dates = {
-        "start": opts.start,
-        "end": opts.end
-    }
+    ranges = {"hs_max": opts.hs_min}
+    point = {"lon": opts.longitude, "lat": opts.latitude}
+    dates = {"start": opts.start, "end": opts.end}
     return ranges, point, dates
 
 
@@ -56,14 +60,14 @@ def sanitize_args(opts):
 
     # Check coordinates:
     if opts.longitude is None or opts.latitude is None:
-        raise ValueError(
-            "Both latitude and longitude must be provided.")
+        raise ValueError("Both latitude and longitude must be provided.")
 
     # Check if identifier is given:
 
     if opts.hs_max is None:
         raise ValueError(
-            "It is required to provide all suitable ranges of variables for the wind resource.")
+            "It is required to provide all suitable ranges of variables for the wind resource."
+        )
 
     # Check if period is correctly given:
     try:
@@ -72,7 +76,8 @@ def sanitize_args(opts):
         opts.end = opts.end.replace(hour=23, minute=59, second=59)
     except ValueError:
         raise ValueError(
-            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format."
+        )
     except TypeError:
         raise TypeError("Remember both start and end date must be given.")
 
@@ -131,24 +136,29 @@ def sanitize_wind_params(params):
     try:
         if params["config"]["hs_max"] is None or params["config"]["pow"] is None:
             raise ValueError(
-                "It is required to provide all suitable ranges of variables for resource.")
+                "It is required to provide all suitable ranges of variables for resource."
+            )
     except KeyError:
         raise ValueError(
-            "It is required to provide all suitable ranges of variables for resource.")
+            "It is required to provide all suitable ranges of variables for resource."
+        )
     # Check if period is correctly given:
     try:
         params["dates"]["start"] = datetime.strptime(
-            params["dates"]["start"], "%Y-%m-%d")
-        params["dates"]["end"] = datetime.strptime(
-            params["dates"]["end"], "%Y-%m-%d")
+            params["dates"]["start"], "%Y-%m-%d"
+        )
+        params["dates"]["end"] = datetime.strptime(params["dates"]["end"], "%Y-%m-%d")
         params["dates"]["end"] = params["dates"]["end"].replace(
-            hour=23, minute=59, second=59)
+            hour=23, minute=59, second=59
+        )
     except KeyError:
         raise ValueError(
-            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format."
+        )
     except ValueError:
         raise ValueError(
-            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format."
+        )
     except TypeError:
         raise TypeError("Remember both start and end date must be given.")
 
@@ -166,30 +176,35 @@ def sanitize_wave_params(params):
     try:
         if params["config"]["hs_min"] is None or params["config"]["hs_max"] is None:
             raise ValueError(
-                "It is required to provide wave height suitable ranges for resource.")
+                "It is required to provide wave height suitable ranges for resource."
+            )
         if params["config"]["tp_min"] is None or params["config"]["tp_max"] is None:
             raise ValueError(
-                "It is required to provide suitables peak period ranges for resource.")
+                "It is required to provide suitables peak period ranges for resource."
+            )
         if params["config"]["cge_min"] is None:
-            raise ValueError(
-                "It is required to provide available Energy Flux")
+            raise ValueError("It is required to provide available Energy Flux")
     except KeyError:
         raise ValueError(
-            "It is required to provide all suitable ranges of variables for resource.")
+            "It is required to provide all suitable ranges of variables for resource."
+        )
     # Check if period is correctly given:
     try:
         params["dates"]["start"] = datetime.strptime(
-            params["dates"]["start"], "%Y-%m-%d")
-        params["dates"]["end"] = datetime.strptime(
-            params["dates"]["end"], "%Y-%m-%d")
+            params["dates"]["start"], "%Y-%m-%d"
+        )
+        params["dates"]["end"] = datetime.strptime(params["dates"]["end"], "%Y-%m-%d")
         params["dates"]["end"] = params["dates"]["end"].replace(
-            hour=23, minute=59, second=59)
+            hour=23, minute=59, second=59
+        )
     except KeyError:
         raise ValueError(
-            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format."
+        )
     except ValueError:
         raise ValueError(
-            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format.")
+            "Invalid start or end data format. Remember they must be in YYYY-MM-DD format."
+        )
     except TypeError:
         raise TypeError("Remember both start and end date must be given.")
 
