@@ -1,8 +1,11 @@
+from datetime import datetime
 import json
 import requests
 from msptools.libenergy.thredds import Thredds
 from msptools.config import CONFIG
-
+from datahub.products import Products
+from datahub.variables import Variables
+from datahub.thredds import Catalog
 
 def get_url_catalog():
     id_catalog = CONFIG["ECMWF"]["ERA_Interim"]["id"]
@@ -27,23 +30,29 @@ def get_data_from_era_interim(point, dates, variables):
     for variable in variables:
         var_names.append(variable.get("name"))
 
-    url_catalog = get_url_catalog()
+    p = Products()
+    product = p.get(CONFIG["ECMWF"]["ERA_Interim"]["id"])
+    v = Variables()
+    variables_json = v.get_by_product_filtered_by_name(product, var_names)
 
-    thredds = Thredds(url_catalog)
-    data_from_thredds = thredds.get_data_in_point_between_dates(point, dates, var_names)
+    c = Catalog(product)
+    dates_str = {"start": dates["start"].strftime("%Y-%m-%dT%H:%M:%S"), "end": dates["end"].strftime("%Y-%m-%dT%H:%M:%S")}
 
-    indexes = list(data_from_thredds.keys())
+    
+    data_from_thredds = data_from_thredds = c.data(point,dates_str, variables_json)
+
+    
     output_data = {}
-    for index in indexes:
-        output_data = set_output_data(
-            index, data_from_thredds[index], variables, output_data
-        )
+    for data in data_from_thredds:
+        output_data = set_output_data(data["date"],data, output_data, variables)
+
 
     return output_data
 
 
-def set_output_data(index, data, variables, output):
-    output[index] = {}
+def set_output_data(index, data, output, variables):
+    index_datetime = datetime.strptime(index, "%Y-%m-%dT%H:%M:%SZ")
+    output[index_datetime] = {}
     for variable in variables:
-        output[index][variable["alias"]] = data[variable["name"]]
+        output[index_datetime][variable["alias"]] = data[variable["name"]]
     return output

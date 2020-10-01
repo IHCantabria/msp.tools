@@ -1,9 +1,11 @@
+from datetime import datetime
 import json
 import requests
 from msptools.libaquaculture.thredds import Thredds
 from msptools.config import CONFIG
-
-
+from datahub.products import Products
+from datahub.variables import Variables
+from datahub.thredds import Catalog
 def get_url_catalog():
     id_catalog = CONFIG["copernicus"]["global_reanalysis_physical"]["id"]
     url_datahub = CONFIG["datahub"]["urls"]["product"].format(id=id_catalog)
@@ -27,21 +29,30 @@ def get_temperature_and_salinity_from_global_reanalysis_physical(point, dates):
     for variable in CONFIG["copernicus"]["variables"]:
         var_names.append(variable.get("name"))
 
-    url_catalog = get_url_catalog()
+    p = Products()
+    product = p.get(CONFIG["copernicus"]["global_reanalysis_physical"]["id"])
+    v = Variables()
+    variables = v.get_by_product_filtered_by_name(product, var_names)
 
-    thredds = Thredds(url_catalog)
-    data_from_thredds = thredds.get_data_in_point_between_dates(point, dates, var_names)
+    c = Catalog(product)
 
-    indexes = list(data_from_thredds.keys())
+    dates_str = {"start": dates["start"].strftime("%Y-%m-%dT%H:%M:%S"), "end": dates["end"].strftime("%Y-%m-%dT%H:%M:%S")}
+
+    data_from_thredds = c.data(point,dates_str, variables)
+
+
     output_data = {}
-    for index in indexes:
-        output_data = set_output_data(index, data_from_thredds[index], output_data)
+
+    for data in data_from_thredds:
+        output_data = set_output_data(data["date"],data, output_data)
+
 
     return output_data
 
 
 def set_output_data(index, data, output):
-    output[index] = {}
+    index_datetime = datetime.strptime(index, "%Y-%m-%dT%H:%M:%SZ")
+    output[index_datetime] = {}
     for variable in CONFIG["copernicus"]["variables"]:
-        output[index][variable["alias"]] = data[variable["name"]]
+        output[index_datetime][variable["alias"]] = data[variable["name"]]
     return output
