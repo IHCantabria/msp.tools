@@ -1,7 +1,6 @@
 from datetime import datetime
 import json
 import requests
-from msptools.libaquaculture.thredds import Thredds
 from msptools.config import CONFIG
 from datahub.products import Products
 from datahub.variables import Variables

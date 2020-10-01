@@ -3,7 +3,6 @@ import datetime
 
 from msptools.libaquaculture import core
 from msptools.libaquaculture import copernicus
-from msptools.libaquaculture.thredds import Thredds
 from msptools import aquaculture
 from msptools.config import CONFIG
 
@@ -30,20 +29,6 @@ class Test_Data(unittest.TestCase):
         )
         self.assertIsNotNone(ocean_data)
         self.assertIs(len(ocean_data), 60)
-
-    def test_scale_factor(self):
-        expected_value = 18.6481216738  # temp on 2/1/2015(day/month/year)
-        expected_salinity = 36.597797192  # salinity on 2/1/2015
-        thredds = Thredds(CONFIG["copernicus"]["global_reanalysis_physical"]["catalog"])
-        raw_value = -3211
-        raw_salinity = 23985
-
-        real_value = thredds.get_real_value(raw_value, 7.324442e-4, 21)
-        real_salinity = thredds.get_real_value(
-            raw_salinity, 0.0015259255, -0.0015259255
-        )
-        self.assertAlmostEqual(real_value, expected_value)
-        self.assertAlmostEqual(real_salinity, expected_salinity)
 
     def test_check_output_format(self):
         data = aquaculture.load_historical_serie(self.params)
