@@ -1,3 +1,3 @@
 wheel==0.35.1
-git+https://github.com/IHCantabria/datahub.client@v0.3.3#egg=datahubclient
+git+https://github.com/IHCantabria/datahub.client@v0.3.3-dev#egg=datahubclient
 
