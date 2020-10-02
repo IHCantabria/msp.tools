@@ -1,6 +1,7 @@
 from datetime import datetime
 import json
 import requests
+from msptools import utils
 from msptools.config import CONFIG
 from datahub.products import Products
 from datahub.variables import Variables
@@ -39,6 +40,7 @@ def get_temperature_and_salinity_from_global_reanalysis_physical(point, dates):
 
     data_from_thredds = c.data(point,dates_str, variables)
 
+    utils.check_land_exception(data_from_thredds, var_names)
 
     output_data = {}
 

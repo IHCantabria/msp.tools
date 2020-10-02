@@ -1,6 +1,7 @@
 from datetime import datetime
 import json
 import requests
+from msptools import utils
 from msptools.config import CONFIG
 from datahub.products import Products
 from datahub.variables import Variables
@@ -39,7 +40,7 @@ def get_data_from_era_interim(point, dates, variables):
 
     
     data_from_thredds = data_from_thredds = c.data(point,dates_str, variables_json)
-
+    utils.check_land_exception(data_from_thredds, var_names)
     
     output_data = {}
     for data in data_from_thredds:
