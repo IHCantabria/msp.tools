@@ -1,2 +1,2 @@
 wheel==0.35.1
-git+ssh://git@github.com:IHCantabria/datahub.client@v0.3.3-dev#egg=datahubclient
+git+ssh://git@github.com/IHCantabria/datahub.client@v0.3.3-dev#egg=datahubclient
