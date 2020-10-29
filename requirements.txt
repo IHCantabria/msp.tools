@@ -1,2 +1,4 @@
 wheel==0.35.1
 git+ssh://git@github.com/IHCantabria/datahub.client@v0.3.3-dev#egg=datahub
+flask-restplus==0.13.0
+Werkzeug==0.16.0
