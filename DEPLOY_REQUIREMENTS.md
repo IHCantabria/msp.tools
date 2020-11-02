@@ -65,6 +65,9 @@ Select only if needed:
 * Ejecutar requirements.txt
 * Modificar `{{ app }}/env_{{ app }}/msptools/config.py`:
     - valor para `filepath`: `"/dat/{{ app }}/log/api.log"`
+* Modificar `{{ app }}/env_{{ app }}/datahub/logging.ini`:
+    - la ruta en la línea 34 debe ser: `"/dat/{{ app }}/log/datahubclient.log"`
+
 
 * Permisos `0755` para directorios:
     - path: "{{ item.ruta }}"
