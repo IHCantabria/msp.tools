@@ -63,7 +63,7 @@ Select only if needed:
 **Do you need any other configuration?**
 
 * Ejecutar requirements.txt
-* Modificar `{{ app }}/env_{{ app }}/lib/python3.6/site-packages/msptools/config.py`:
+* Modificar `{{ app }}/env_{{ app }}/msptools/config.py`:
     - valor para `filepath`: `"/dat/{{ app }}/log/api.log"`
 
 * Permisos `0755` para directorios:
