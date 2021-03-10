@@ -5,7 +5,7 @@ from msptools import utils
 from msptools.config import CONFIG
 from datahub.products import Products
 from datahub.variables import Variables
-from datahub.thredds import Catalog
+from datahub.catalog import Catalog
 
 
 def get_url_catalog():
@@ -38,12 +38,7 @@ def get_temperature_and_salinity_from_global_reanalysis_physical(point, dates):
 
     c = Catalog(product)
 
-    dates_str = {
-        "start": dates["start"].strftime("%Y-%m-%dT%H:%M:%S"),
-        "end": dates["end"].strftime("%Y-%m-%dT%H:%M:%S"),
-    }
-
-    data_from_thredds = c.data(point, dates_str, variables)
+    data_from_thredds = c.data(point, dates, variables)
 
     utils.check_land_exception(data_from_thredds, var_names)
 
