@@ -33,8 +33,10 @@ def load_historical_serie(params):
     """Load data serie for salinity and temperature in a point between dates"""
     logger.debug("Load ocean data from web")
     specie, point, dates = core.parse_input_web(params)
-    data_serie = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
-        point, dates
+    data_serie = (
+        copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
+            point, dates
+        )
     )
     parsed_data_serie = standarize_data(data_serie)
     return parsed_data_serie
@@ -64,11 +66,12 @@ def _get_values_for_variable(var_name, data_serie):
 
 
 def get_biological_probability(specie_config, point, dates):
-    """It calculates the probability of growing specie, for a specific point and set period.To this end: 1) Download data for the specific point and set period from Copernicus provider, 2) Set up the suitable temperature and salinity range growth of the study specie, 3) Select suitable days of data period downloaded in order to calculate the probability of growing
-    """
+    """It calculates the probability of growing specie, for a specific point and set period.To this end: 1) Download data for the specific point and set period from Copernicus provider, 2) Set up the suitable temperature and salinity range growth of the study specie, 3) Select suitable days of data period downloaded in order to calculate the probability of growing"""
 
-    values_from_global_reanalysis = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
-        point, dates
+    values_from_global_reanalysis = (
+        copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
+            point, dates
+        )
     )
     specie = biology.Species(specie_config)
     probability = specie.biological_suitability_index(values_from_global_reanalysis)

@@ -18,7 +18,10 @@ class Test_Wave(unittest.TestCase):
                 "cge_min": 15,
             },
             "point": {"lon": -13.016, "lat": 28.486},
-            "dates": {"start": "2015-01-01", "end": "2015-03-01",},
+            "dates": {
+                "start": "2015-01-01",
+                "end": "2015-03-01",
+            },
         }
 
     def test_get_suitability(self):
