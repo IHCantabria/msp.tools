@@ -24,8 +24,10 @@ class Test_Data(unittest.TestCase):
     def test_load_historical_serie(self):
         ocean_data = None
         specie, point, dates = core.parse_input_web(self.params)
-        ocean_data = copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
-            point, dates
+        ocean_data = (
+            copernicus.get_temperature_and_salinity_from_global_reanalysis_physical(
+                point, dates
+            )
         )
         self.assertIsNotNone(ocean_data)
         self.assertIs(len(ocean_data), 60)
