@@ -5,7 +5,8 @@ from msptools import utils
 from msptools.config import CONFIG
 from datahub.products import Products
 from datahub.variables import Variables
-from datahub.thredds import Catalog
+from datahub.catalog import Catalog
+
 
 def get_url_catalog():
     id_catalog = CONFIG["ECMWF"]["ERA_Interim"]["id"]
@@ -36,16 +37,13 @@ def get_data_from_era_interim(point, dates, variables):
     variables_json = v.get_by_product_filtered_by_name(product, var_names)
 
     c = Catalog(product)
-    dates_str = {"start": dates["start"].strftime("%Y-%m-%dT%H:%M:%S"), "end": dates["end"].strftime("%Y-%m-%dT%H:%M:%S")}
 
-    
-    data_from_thredds = data_from_thredds = c.data(point,dates_str, variables_json)
+    data_from_thredds = data_from_thredds = c.data(point, dates, variables_json)
     utils.check_land_exception(data_from_thredds, var_names)
-    
+
     output_data = {}
     for data in data_from_thredds:
-        output_data = set_output_data(data["date"],data, output_data, variables)
-
+        output_data = set_output_data(data["date"], data, output_data, variables)
 
     return output_data
 
