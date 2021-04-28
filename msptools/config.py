@@ -44,3 +44,4 @@ CONFIG = {
         },
     },
 }
+threddsIH = "https://ihthredds.ihcantabria.com/thredds/dodsC/"
