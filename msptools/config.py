@@ -43,5 +43,21 @@ CONFIG = {
             "link": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era-interim",
         },
     },
+        "specieranges":{
+            "European seabass":{
+                "name" : "European seabass",
+                "salinity_min": 30,
+                "salinity_max": 40,
+                "temperature_min": 18,
+                "temperature_max": 26,
+            },
+            "Cobia":{
+                "name" : "Cobia",
+                "salinity_min": 20,
+                "salinity_max": 40,
+                "temperature_min": 15,
+                "temperature_max": 26,
+            }
+    } 
 }
 threddsIH = "https://ihthredds.ihcantabria.com/thredds/dodsC/"

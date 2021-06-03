@@ -4,7 +4,7 @@ import  netCDF4 as nc
 import msptools
 from netCDF4 import Dataset
 from msptools.utils import LandException
-from msptools.config import threddsIH
+import msptools.config as Config
 from datetime import datetime
 
 
@@ -12,10 +12,11 @@ NetCDFProviderInput = input('Enter your netcdf provider: ')
 NetCDFProvider = xarray.open_dataset(NetCDFProviderInput)
 StartDate, EndtDate = input("Enter Start and End analysis (dates separated by space). Format: Year-Month-Day ").split()
 StartEndDate = NetCDFProvider.sel(time=slice(StartDate, EndtDate))
-xmin,xmax,ymin,ymax = [float(x) for x in input("Enter longitudes and latitudes coordinates following this orden: xmin,xmax,ymin,ymax ").split()]
-extentStudy = StartEndDate.sel(longitude=slice(xmin,xmax), latitude=slice(ymin,ymax)) 
-specie = dict(name= 'European seabass', salinity_min= 20, salinity_max= 40, temperature_min= 15, temperature_max= 16)
 dates = dict(ini= StartDate, end= EndtDate)
+xmin,xmax,ymin,ymax = [float(x) for x in input("Enter longitudes and latitudes coordinates following this orden: xmin,xmax,ymin,ymax ").split()]
+extentStudy = StartEndDate.sel(longitude=slice(xmin,xmax), latitude=slice(ymin,ymax))
+SpecieInput = input('Enter specie name: ')
+specie = Config.CONFIG["specieranges"][SpecieInput]
 
 
 # NetCDFProvider = xarray.open_dataset(""https://ihthredds.ihcantabria.com/thredds/dodsC/COPERNICUS/CMEMS/GLOBAL_REANALYSIS_PHY_001_030/GLOBAL_REANALYSIS_PHY_001_030.nc"")
@@ -68,7 +69,7 @@ for longitude in listaLongitudes:
             print ("Terminado")
         contadorLat = contadorLat + 1
     contadorLon = contadorLon + 1
-ds.to_netcdf("SuitabilityOutput.nc")
+ds.to_netcdf("BiologicalSuitability" + SpecieInput +".nc")
 
 
 
