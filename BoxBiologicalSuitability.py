@@ -5,6 +5,7 @@ import msptools
 from netCDF4 import Dataset
 from msptools.utils import LandException
 from msptools.config import threddsIH
+from datetime import datetime
 
 
 NetCDFProviderInput = input('Enter your netcdf provider: ')
@@ -14,13 +15,13 @@ StartEndDate = NetCDFProvider.sel(time=slice(StartDate, EndtDate))
 xmin,xmax,ymin,ymax = [float(x) for x in input("Enter longitudes and latitudes coordinates following this orden: xmin,xmax,ymin,ymax ").split()]
 extentStudy = StartEndDate.sel(longitude=slice(xmin,xmax), latitude=slice(ymin,ymax)) 
 specie = dict(name= 'European seabass', salinity_min= 20, salinity_max= 40, temperature_min= 15, temperature_max= 16)
-dates = dict( ini= StartDate, end= EndtDate)
+dates = dict(ini= StartDate, end= EndtDate)
 
 
 # NetCDFProvider = xarray.open_dataset(""https://ihthredds.ihcantabria.com/thredds/dodsC/COPERNICUS/CMEMS/GLOBAL_REANALYSIS_PHY_001_030/GLOBAL_REANALYSIS_PHY_001_030.nc"")
 # StartEndDate = NetCDFProvider.sel(time=slice("1993-01-01", "1993-02-01"))
 # extentStudy = StartEndDate.sel(longitude=slice(-0.179,1.34), latitude=slice(38.74,39.003))
-# DiccionarioOld{"name": 'European seabass', "salinity_min": 20, "salinity_max": 40, "temperature_min": 15, "temperature_max": 16 }, "dates": { "ini": '2015-01-01', "end": '2015-03-01' }
+# speciedates{"name": 'European seabass', "salinity_min": 20, "salinity_max": 40, "temperature_min": 15, "temperature_max": 16 }, "dates": { "ini": '2015-01-01', "end": '2015-03-01' }
 
 listaLongitudes = extentStudy["longitude"]
 numberLongitudes = len(listaLongitudes)
@@ -54,7 +55,7 @@ for longitude in listaLongitudes:
     contadorLat = 0
     for latitude in listaLatitudes:
         point = {"lon": np.asscalar(longitude), "lat": np.asscalar(latitude)}
-        params = {"point": point,"specie": specie,"dates":{ "ini": '2015-01-01', "end": '2015-03-01' }}
+        params = {"point": point,"specie": specie,"dates":{ "ini": StartDate, "end": EndtDate }}
         try:
             value = msptools.run_biological(params)
             #asignar un valor, a un índice concreto
